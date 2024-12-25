@@ -1,0 +1,369 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Evaluación
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Evaluación</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+
+
+                <div id="add-listing">
+
+
+                <form id="resource_form" method="post" class="with-forms" action=".">
+
+                 {% csrf_token %}    
+                 {{ form.errors }}
+
+                <!-- Section -->
+                <div class="add-listing-section">
+
+                    <!-- Headline -->
+                    <div class="add-listing-headline">
+                        <h3><i class="sl sl-icon-user"></i>{% trans "Paciente" noop %}</h3>
+                    </div>
+
+                    <!-- Title -->
+                    <div class="row with-forms">
+                        <div class="col-md-4">
+                            <h5>{% trans "Código" noop %}</h5>
+                            <input class="search-field" id="id_contact_person" name="contact_person" type="text"/>
+                        </div>                        
+                    </div>
+
+                </div>
+
+                 <!-- Section -->
+                <div class="add-listing-section margin-top-45">
+
+                    <!-- Headline -->
+                    <div class="add-listing-headline">
+                        <h3><i class="sl sl-icon-user"></i>{% trans "Datos personales" noop %} </h3>
+                    </div>
+
+                                            <!-- Title -->
+                    <div class="row with-forms">
+                            <div class="col-md-6">
+                                <h5>{% trans "Sexo" noop %}</h5>
+                                <select class="chosen-select-no-single" id="id_country" name="country">
+                                    <option value="" label="blank">Sexo</option>  
+                                    <option value="H">Hombre</option>
+                                    <option value="M">Mujer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>{% trans "Fecha de nacimiento" noop %}</h5>
+                                <input class="search-field" id="id_shortname" name="shortname" type="text" value=""/>
+                            </div>                            
+                    </div>  
+                    <!-- Title -->
+                    <div class="row with-forms">
+                        <div class="col-md-4">
+                            <h5>{% trans "Talla" noop %}</h5>
+                            <input class="search-field" id="id_contact_person" name="contact_person" type="text"/>
+                        </div>
+                        <div class="col-md-8">
+                            <h5>{% trans "Peso" noop %}</h5>
+                            <input class="search-field" id="id_contact_email" name="contact_email" type="text"/>
+                        </div>                            
+                    </div>
+
+                </div>
+
+
+
+                 <!-- Section -->
+                <div class="add-listing-section margin-top-45">
+
+                        <!-- Headline -->
+                        <div class="add-listing-headline">
+                            <h3><i class="sl sl-icon-user"></i>{% trans "Detalle de la visita" noop %} </h3>
+                        </div>
+
+                        
+                        <!-- Title -->
+                        <div class="row with-forms">
+                                <div class="col-md-6">
+                                        <h5>{% trans "Fecha de la visita" noop %}</h5>
+                                        <input class="search-field" id="id_shortname" name="shortname" type="text" value=""/>
+                                    </div>   
+                                <div class="col-md-6">
+                                    <h5>{% trans "Evaluador" noop %}</h5>
+                                    <select class="chosen-select-no-single" id="id_country" name="country">
+                                        <option value="" label="blank">Evaluador</option>  
+                                        <option value="H">enfermera especialista en geriatria</option>
+                                        <option value="M">enfermera otros</option>
+                                        <option value="M">médico general</option>
+                                        <option value="M">equipo multidisciplinar</option>
+                                        <option value="M">médico residente</option>
+                                        <option value="M">otros</option>
+
+                                    </select>
+                                </div>
+                         
+                        </div>  
+                        <!-- Title -->
+                        <div class="row with-forms">
+                                <div class="col-md-6">
+                                    <h5>{% trans "Motivo de evaluación" noop %}</h5>
+                                    <select class="chosen-select-no-single" id="id_country" name="country">
+                                        <option value="" label="blank">{% trans "Motivo de evaluación" noop %}</option>  
+                                        <option value="H">{% trans "impresión de fragilidad" noop %}</option>
+                                        <option value="M">{% trans "queja cognitiva" noop %}</option>
+                                        <option value="M">{% trans "desconocido" noop %}</option>
+                                        <option value="M">{% trans "Motivo de evaluación" noop %}</option>
+                                        <option value="M">{% trans "Motivo de evaluación" noop %}</option>
+                                    </select>
+                                </div>   
+                                <div class="col-md-6">
+                                    <h5>{% trans "Evaluador" noop %}</h5>
+                                    <select class="chosen-select-no-single" id="id_country" name="country">
+                                        <option value="0" label="blank">{% trans "Ninguna" noop %}</option>  
+                                        <option value="H">{% trans "intervención social" noop %}</option>
+                                        <option value="M">{% trans "intervención física" noop %}</option>
+                                        <option value="M">{% trans "intervención cognitiva" noop %}</option>
+                                        <option value="M">{% trans "intervención nutricional" noop %}</option>
+                                        <option value="M">{% trans "intervención psicológica" noop %}</option>
+                                        <option value="M">{% trans "Otras intervenciones" noop %}</option>
+                                    </select>
+                                </div>
+                        
+                        </div>  
+                </div>
+
+
+<!--
+Motivo de evaluación: impresión de fragilidad/ queja cognitiva/ desconocido
+Intervenciones propuestas:
+− ninguna
+− intervención social (consejo, Trabajador social o MAIA*)
+− intervención física (consejo, educación para la salud,soportes de información,profesor de actividad física,orientación con fisioterapeuta,orientación en consulta de fragilidad u hospital de día).
+− intervención cognitiva (consejo,estimulación cognitiva, consulta simple en geriatría, consulta en unidad de memoria).
+− intervención nutricional (consejo, educación para la salud, consulta nutricional, orientación con dietista,prescripción de suplementos nutricionales orales, consulta con médico nutricionista, consulta con dentista).
+− intervención psicológica (consejo, orientación con psicólogo o psiquiatra).
+− Otras intervenciones (consulta con médico especialista, consulta con paramédico especialista, propuesta de ayuda domiciliaria, propuesta de modificaciones terapéuticas, propuesta de exámenes complementarios,otros).
+-->
+
+                
+                <!-- Section -->
+                <div class="add-listing-section margin-top-45">
+
+                    <!-- Headline -->
+                    <div class="add-listing-headline">
+                        <h3><i class="sl sl-icon-user"></i>{% trans "Cuestionario" noop %} </h3>
+                    </div>
+
+                    
+                    <!-- Title -->
+                    <div class="row with-forms">  
+                            <div class="col-md-6">
+                                <h5>{% trans "Cáncer en tratamiento actual" noop %}</h5>
+                                <select class="chosen-select-no-single" id="id_country" name="country">
+                                    <option value="1">{% trans "Sí" noop %}</option>  
+                                    <option value="0">{% trans "No" noop %}</option>
+                                    <option value="-1">{% trans "Desconocido" noop %}</option>
+                                </select>
+                            </div>
+                        
+                    </div> 
+                    <div class="row with-forms">  
+                            <div class="col-md-6">
+                                <h5>{% trans "Problemas visuales" noop %}</h5>
+                                <select class="chosen-select-no-single" id="id_country" name="country">
+                                    <option value="1">{% trans "Sí" noop %}</option>  
+                                    <option value="0">{% trans "No" noop %}</option>
+                                    <option value="-1">{% trans "Desconocido" noop %}</option>
+                                </select>
+                            </div>
+                        
+                    </div> 
+                    <div class="row with-forms">  
+                            <div class="col-md-6">
+                                <h5>{% trans "Problemas auditivos" noop %}</h5>
+                                <select class="chosen-select-no-single" id="id_country" name="country">
+                                    <option value="1">{% trans "Sí" noop %}</option>  
+                                    <option value="0">{% trans "No" noop %}</option>
+                                    <option value="-1">{% trans "Desconocido" noop %}</option>
+                                </select>
+                            </div>
+                        
+                    </div> 
+                    <div class="row with-forms">  
+                            <div class="col-md-6">
+                                <h5>{% trans "Incontinencia urinaria" noop %}</h5>
+                                <select class="chosen-select-no-single" id="id_country" name="country">
+                                    <option value="1">{% trans "Sí" noop %}</option>  
+                                    <option value="0">{% trans "No" noop %}</option>
+                                    <option value="-1">{% trans "Desconocido" noop %}</option>
+                                </select>
+                            </div>
+                        
+                    </div> 
+                    <h5>{% trans "Miedo a caer" noop %}</h5>
+                    <div class="checkboxes in-row margin-bottom-20">
+					
+                            <input id="check-a" type="checkbox" name="check">
+                            <label for="check-a">{% trans "Sí" noop %}</label>
+
+                            <input id="check-b" type="checkbox" name="check">
+                            <label for="check-b">{% trans "No" noop %}</label>
+
+                            <input id="check-c" type="checkbox" name="check">
+                            <label for="check-c">{% trans "Desconocido" noop %}</label>
+                    
+                    </div>
+                    <h5>{% trans "Historia de caídas los últimos 3 meses" noop %}</h5>
+                    <div class="checkboxes in-row margin-bottom-20">
+					
+                            <input id="check-a" type="checkbox" name="check">
+                            <label for="check-a">{% trans "Sí" noop %}</label>
+
+                            <input id="check-b" type="checkbox" name="check">
+                            <label for="check-b">{% trans "No" noop %}</label>
+
+                            <input id="check-c" type="checkbox" name="check">
+                            <label for="check-c">{% trans "Desconocido" noop %}</label>
+                    
+                    </div>
+                    <h5>{% trans "Pérdida de peso involuntaria" noop %}</h5>
+                    <div class="checkboxes in-row margin-bottom-20">
+					
+                            <input id="check-a" type="checkbox" name="check">
+                            <label for="check-a">{% trans "Sí" noop %}</label>
+
+                            <input id="check-b" type="checkbox" name="check">
+                            <label for="check-b">{% trans "No" noop %}</label>
+
+                            <input id="check-c" type="checkbox" name="check">
+                            <label for="check-c">{% trans "Desconocido" noop %}</label>
+                    
+                    </div>
+                </div>
+
+                <!--
+                    Cáncer en tratamiento actual: Sí/No/Desconocido
+                    Problemas visuales: si/no/desconocido ¿Corregido?: Sí/no/desconocido
+                    Problemas auditivos: si/no/desconocido ¿Corregidos?: si/no/desconocido
+                    Miedo a caer: si/no/desconocido
+                    Historia de caídas los últimos 3 meses: si/no/desconocido
+                    Estación unimodal: si/no/desconocido
+                    Incontinencia urinaria: si/no/desconocido
+                    Pérdida de peso involuntaria: si/no/desconocido
+                    Sedentarismo: si/no/desconocido
+                    Lentificación de la marcha: si/no/desconocido
+                    Disminución en la fuerza de prensión: si/no/desconocido
+                    Agotamiento subjetivo en la última semana: si/no/desconocido
+                    Pérdida de memoria según el paciente: si/no/desconocido
+                    Pérdida de memoria según familiares: si/no/desconocido
+                    Antecedentes enfermedad Alzheimer en familiar de 1o grado: si/no/desconocido
+                -->
+
+                <!-- Section -->
+                <div class="add-listing-section margin-top-45">
+
+                    <!-- Headline -->
+                    <div class="add-listing-headline">
+                        <h3><i class="sl sl-icon-location"></i> {% trans "Observaciones" noop %}</h3>
+                    </div>
+
+                    <div class="submit-section">
+                                                                            
+                        <!-- Row -->
+                        <div class="row with-forms">
+
+                            <!-- Address -->
+                            <div class="col-md-6">
+                                <h5>{% trans "Velocidad de la marcha 4m" noop %}</h5>
+                                <input type="text" id="id_address" name="address" placeholder="{% trans "Velocidad de la marcha 4m" noop %}">
+                            </div>
+                            <!-- City -->
+                                                            
+                            <div class="col-md-6">
+                                <h5>{% trans "Fuerza de prension (kg): decimales." noop %}</h5>
+                                <input type="text" id="id_city" name="city">
+                            </div>
+                           
+                        </div>
+
+                        <div class="row with-forms">
+
+                                <!-- Address -->
+                                <div class="col-md-6">
+                                    <h5>{% trans "Velocidad de la marcha 4m" noop %}</h5>
+                                    <input type="text" id="id_address" name="address" placeholder="{% trans "Velocidad de la marcha 4m" noop %}">
+                                </div>
+                                <!-- City -->
+                                                                
+                                <div class="col-md-6">
+                                    <h5>{% trans "Fuerza de prension (kg): decimales." noop %}</h5>
+                                    <input type="text" id="id_city" name="city">
+                                </div>
+                               
+                        </div>
+                        <!--
+                        • Score AVD: Indice de barthel actvidades de la vida diaria, puntuación del 0(100); los item se puntuan 0, 5, 10, 15. https://www.hipocampo.org/Barthel.asp 
+
+                        • Score AIVD: Escala Lawton y brody, escala actividades instrumentales de la vida diario, apuntación por ítem 0 o 1. puntuación máxima 8 https://www.hipocampo.org/lawton-brody.asp 
+                        -->
+
+                        
+                        <div class="row with-forms">
+
+                                <!-- Address -->
+                                <div class="col-md-6">
+                                    <h5>{% trans "Score AVD" noop %}</h5>
+                                    <input type="text" id="id_address" name="address" placeholder="{% trans "Score AVD" noop %}">
+                                </div>
+                                <!-- City -->
+                                                                
+                                <div class="col-md-6">
+                                    <h5>{% trans "Score AIVD" noop %}</h5>
+                                    <input type="text" id="id_city" name="city">
+                                </div>
+
+                                <h5>{% trans "Score AVD" noop %}</h5> <div class="numerical-rating" data-rating="1.0"></div><div class="numerical-rating" data-rating="3.0"></div> <div class="numerical-rating" data-rating="5.0"></div>
+                               
+                        </div>                        
+                    
+                        <!-- Row / End -->
+
+                    </div>
+                </div>
+                <!-- Section / End -->
+
+
+                </form>
+
+                </div>
+
+                <a href="#" onclick="document.getElementById('resource_form').submit();" class="button preview">Enviar <i class="fa fa-arrow-circle-right"></i></a>
+                
+                <!-- Section / End -->
+
+    <!-- Content / End -->
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

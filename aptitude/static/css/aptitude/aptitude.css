@@ -1,0 +1,65 @@
+/* Enhanced Section Headings */
+.add-listing-headline h3, .add-listing-section h3 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #66676b;
+    margin-bottom: 20px;
+}
+
+/* Borders around Question Boxes */
+.with-forms .question-box {
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Navarra Questions with Shadow and Background (dd9ca8)*/
+.with-forms .navarra-question {
+    background-color: #FFE5D1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #FFC288;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Special Questions with Shadow and Background */
+.with-forms .special-question {
+    background-color: #FFC288;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #fcab55;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Add specific styling for rows with 'special-question' class */
+.basic-table tr.special-row td:not(:first-child) {
+    background-color: #FFC288; /* Light red background for alert */
+    
+   
+}
+
+/* Add styling for rows with 'navarra-question' class */
+.basic-table tr.navarra-row td:not(:first-child) {
+    background-color: #FFE5D1; /* Light green background */
+  
+}
+
+/* Default styling for rows with 'question-box' class */
+.basic-table tr.question-row td:not(:first-child) {
+    background-color: #ffffff; /* White background */
+    color: #333333; /* Default text color */
+    /*border: 1px solid #ccc;  /* Light border for structure */
+    /*transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+/* Optional: Add hover effects for better interactivity */
+.basic_table tr:hover {
+    background-color: #f2f2f2; /* Light gray on hover */
+    cursor: pointer; /* Pointer cursor */
+}

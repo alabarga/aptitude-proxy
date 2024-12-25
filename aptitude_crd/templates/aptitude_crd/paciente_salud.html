@@ -1,0 +1,261 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+{% block title %}
+Pacientes
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Pacientes</li>
+<li>{{object}}</li>
+{% endblock breadcrumbs%}
+
+{% block content %}
+
+    {% if request.user.is_superuser %}
+    <div class="add-listing-section margin-bottom-45">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user"></i>{% trans "Paciente" noop %}</h3>
+        </div>
+
+        <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-4">
+                <h3>{% trans "Código asignado" noop %}: {{object}}</h3>
+            </div>
+
+        </div>
+
+    </div>
+    {% endif %}
+
+
+    <div class="add-listing-section margin-bottom-45">
+
+
+        <!-- Title -->
+        <div class="row">
+            {{ form.errors }}
+        </div>
+
+    </div>
+
+<form action="." method="POST" class="submit-form">
+
+    {% csrf_token %}
+
+    <!-- Section -->
+    <div class="add-listing-section margin-top-45">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-doc"></i> Estado de salud</h3>
+        </div>
+
+        <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-6">
+                <h5> ¿Cómo diría usted que es su salud en general?</h5>
+                <select class="chosen-select-no-single" id="id_salud" name="salud">
+                    <option value="1">Muy buena</option>
+                    <option value="2">Buena</option>
+                    <option value="3">Regular</option>
+                    <option value="4">Mala</option>
+                    <option value="5">Muy mala</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <h5>¿Cuántos problemas de salud crónicos tiene?</h5>
+                <input type="number" id="id_problemas_num" name="problemas_num" value="0"/>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Section -->
+    <div class="add-listing-section margin-top-45">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user"></i> Problemas de salud</h3>
+        </div>
+
+        <!-- Title -->
+        <div class="row with-forms">
+
+          <div class="checkboxes">
+
+            <div class="in-row col-md-6 margin-bottom-20">
+
+							<input id="check-a" type="checkbox" value="1" name="problemas">
+							<label for="check-a">Hipertensión</label>
+
+							<input id="check-b" type="checkbox" value="2" name="problemas">
+							<label for="check-b">Cardiopatía isquémica sin antecedentes de infarto. Hay constancia de angina en la historia clínica sin mención a infarto.</label>
+
+							<input id="check-c" type="checkbox" value="3" name="problemas">
+							<label for="check-c">Infarto de miocardio: Hay pruebas en la historia clínica que el paciente fue hospitalizado por este motivo o bien evidencia que hubo cambios en las enzimas y/o ECG</label>
+
+							<input id="check-d" type="checkbox" value="4" name="problemas">
+							<label for="check-d">Insuficiencia cardiaca: Tiene que haber historia de disnea de esfuerzo y/o signos de insuficiencia cardiaca en la exploración física que respondió favorablemente al tratamiento con digital, diuréticos o vasodilatadores. Los pacientes que estén tomando estos tratamientos pero no que no se pueda constatar que hubo mejora clínica de los síntomas y/o signos, no se incluirán.</label>
+
+							<input id="check-e" type="checkbox" value="5" name="problemas">
+							<label for="check-e">Arritmias cardíacas</label>
+
+							<input id="check-f" type="checkbox" value="6" name="problemas">
+							<label for="check-f">Otros problemas del corazón (valvulopatías, etc.)</label>
+
+							<input id="check-g" type="checkbox" value="7" name="problemas">
+							<label for="check-g">Varices o insuficiencia venosa extremidades inferiores.</label>
+
+							<input id="check-h" type="checkbox" value="8" name="problemas">
+							<label for="check-h">Enfermedad arterial periférica: Incluye claudicación intermitente, intervenidos de by-pass arterial periférica, isquemia arterial aguda y aquellos con aneurisma de aorta (torácica o abdominal) de >6 cm de diámetro.</label>
+
+              <input id="check-i" type="checkbox" value="9" name="problemas">
+							<label for="check-i">Otros problemas neurológicos</label>
+
+              <input id="check-j" type="checkbox" value="10" name="problemas">
+							<label for="check-j">Alergias (fiebre del heno, sinusitis crónica, otras)</label>
+
+              <input id="check-k" type="checkbox" value="11" name="problemas">
+              <label for="check-k">Enfermedad respiratoria crónica: Tiene que haber evidencia en la historia clínica, en la exploración física y en las exploraciones complementarias de cualquier enfermedad respiratoria crónica, incluyendo MPOC y asma.</label>
+
+              <input id="check-l" type="checkbox" value="12" name="problemas">
+              <label for="check-l">Enfermedad del tejido conectivo: Incluye lupus, polimiositis, enfermedad mixta, polimialgia reumática, arteritis de células gigantes y artritis reumatoide.</label>
+
+              <input id="check-m" type="checkbox" value="13" name="problemas">
+              <label for="check-m">Inflamación crónica del intestino, colitis</label>
+
+              <input id="check-n" type="checkbox" value="14" name="problemas">
+              <label for="check-n">Ulcera gastroduodenal: incluye aquellos que han recibido tratamiento por un ulcus y los que tenían úlceras que sangraban.</label>
+
+              <input id="check-o" type="checkbox" value="15" name="problemas">
+              <label for="check-o">Hepatopatía crónica leve: Sin evidencia de hipertensión portal, incluye los pacientes con hepatitis crónica</label>
+
+              <input id="check-p" type="checkbox" value="16" name="problemas">
+              <label for="check-p">Hepatopatía crónica moderada/severa: con evidencia de hipertensión portal (ascitis, varices esofágicas o encefalopatía)</label>
+
+              <input id="check-q" type="checkbox" value="17" name="problemas">
+              <label for="check-q">Dislipemia (colesterol o triglicéridos altos)</label>
+
+              <input id="check-r" type="checkbox" value="18" name="problemas">
+              <label for="check-r">Problemas de tiroides</label>
+
+              <input id="check-s" type="checkbox" value="19" name="problemas">
+              <label for="check-s">Insuficiencia renal crónica moderada/severa: incluye pacientes en diálisis o bien  con creatinina > 3 mg/dl objetivadas de manera repetida y mantenida</label>
+
+						</div>
+
+            <div class="in-row col-md-6 margin-bottom-20">
+
+  							<input id="check-a2" type="checkbox" value="20" name="problemas">
+  							<label for="check-a2">Enfermedad Cerebrovascular. Pacientes con AVC con mínimas secuelas o AVC transitorio.</label>
+
+  							<input id="check-b2" type="checkbox" value="21" name="problemas">
+  							<label for="check-b2">Hemiplejia: Evidencia de hemiplejia o paraplejia como consecuencia de un AVC o otra condición</label>
+
+  							<input id="check-c2" type="checkbox" value="22" name="problemas">
+  							<label for="check-c2">Demencia: pacientes con evidencia en la historia clínica de deterioro cognitivo crónico.</label>
+
+  							<input id="check-d2" type="checkbox" value="23" name="problemas">
+  							<label for="check-d2">Depresión</label>
+                <br/>
+
+  							<input id="check-e2" type="checkbox" value="24" name="problemas">
+  							<label for="check-e2">Nerviosismo / Síndrome ansioso</label>
+                <br/>
+
+  							<input id="check-f2" type="checkbox" value="25" name="problemas">
+  							<label for="check-f2">Dolores de cabeza o migraña</label>
+                <br/>
+
+  							<input id="check-u2" type="checkbox" value="26" name="problemas">
+  							<label for="check-u2">Enfermedad de Párkinson</label>
+
+                <input id="check-v2" type="checkbox" value="27" name="problemas">
+  							<label for="check-v2">Tumor o neoplasia sólida sin metástasis: incluye pacientes con cáncer pero sin metástasis documentadas. No se incluyen los pacientes que hace más de 5 años están en remisión completa y sin indicios de recidiva.</label>
+
+                <input id="check-g2" type="checkbox" value="28" name="problemas">
+  							<label for="check-g2">Tumor o neoplasia sólida con metástasis. No se incluyen los pacientes que hace más de 5 años están en remisión completa y sin indicios de recidiva</label>
+
+                <input id="check-h2" type="checkbox" value="29" name="problemas">
+  							<label for="check-h2">Leucemia: incluye leucemia mieloide crónica, leucemia linfática crónica, policitemia vara, otras  leucemias crónicas y todas las leucemias agudas.</label>
+
+                <input id="check-i2" type="checkbox" value="30" name="problemas">
+  							<label for="check-i2">Linfoma: incluye todos los linfomas, Waldestrom y mieloma</label>
+
+                <input id="check-j2" type="checkbox" value="31" name="problemas">
+  							<label for="check-j2">Sida definido: no incluye los portadores asintomáticos</label>
+
+                <input id="check-k2" type="checkbox" value="32" name="problemas">
+  							<label for="check-k2">Antecedentes de fractura en el último año</label>
+                <br/>
+
+                <input id="check-l2" type="checkbox" value="33" name="problemas">
+  							<label for="check-l2">Osteoporosis</label>
+                <br/>
+
+                <input id="check-m2" type="checkbox" value="34" name="problemas">
+  							<label for="check-m2">Artrosis</label>
+
+                <input id="check-n2" type="checkbox" value="41" name="problemas">
+  							<label for="check-n2">Problemas de espalda (incluye columna y discos intervertebrales)</label>
+
+                <input id="check-o2" type="checkbox" value="35" name="problemas">
+  							<label for="check-o2">Problemas de audición (incluir los que usan audífono)</label>
+
+                <input id="check-p2" type="checkbox" value="36" name="problemas">
+  							<label for="check-p2">Cataratas no operadas</label>
+
+                <input id="check-q2" type="checkbox" value="42" name="problemas">
+  							<label for="check-q2">Otros problemas de visión (degeneración macular senil, problemas de refracción no resueltos con gafas o lentillas)</label>
+
+                <input id="check-r2" type="checkbox" value="38" name="problemas">
+  							<label for="check-r2">Dolor crónico (que requiere uso habitual de analgésicos o limita la actividad)</label>
+
+                <input id="check-s2" type="checkbox" value="39" name="problemas">
+                <label for="check-s2">Diabetes no complicada: incluye los tratados con insulina o hipoglucemiantes pero sin complicaciones tardías, no se incluye a los tratados únicamente con dieta</label>
+
+                <input id="check-t2" type="checkbox" value="40" name="problemas">
+                <label for="check-t2">Diabetes con lesión en órganos diana: Evidencia de retinopatía, neuropatía o nefropatía, se incluyen también antecedentes de cetoacidosis o descompensación hiperosmolar</label>
+
+                <!--
+
+                -->
+  						</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="margin-top-45">
+      <!-- Section / End
+        <a href="{% url 'visita-nueva' object.id %}" class="button border with-icon">Comenzar evaluación  <i class="sl  sl-icon-arrow-right-circle "></i></a>
+      -->
+
+        <input type="submit" name="update_button" value="{% trans 'Guardar y continuar a la evaluación' noop %}" />
+
+    </div>
+
+
+
+    </form>
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

@@ -1,0 +1,183 @@
+<!-- Header -->
+    <div id="header">
+        <div class="container">
+            
+            <!-- Left Side Content -->
+            <div class="left-side">
+                
+                <!-- Logo -->
+                <div id="logo">
+                    <a href="/"><img src="/static/img/logo_interreg.png" alt=""></a>
+                </div>
+
+                <!-- Mobile Navigation -->
+                <div class="mmenu-trigger">
+                    <button class="hamburger hamburger--collapse" type="button">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Main Navigation -->
+                <nav id="navigation" class="style-1">
+                    <ul id="responsive">
+                        <!--
+                        <li>
+                            <a class="current" href="/">Home</a>                            
+                        </li>
+
+                        <li><a href="#">Resources</a>
+                            <ul>
+                                <li><a href="/resources/c/association/">Patient associations</a></li>                                
+                                <li><a href="/resources/c/research/">Research centers</a></li>
+                                <li><a href="/resources/c/biobank/">Biobanks</a></li>
+                                <li><a href="/resources/c/core/">Core facilities</a></li>
+                                <li><a href="/resources/c/bioinfo/">Bioinformatics</a></li>
+                                <li><a href="/resources/c/data/">Data repositories</a></li>                                
+                            </ul>
+                        </li>
+                        -->
+                        
+                    </ul>
+                </nav>
+                <div class="clearfix"></div>
+                <!-- Main Navigation / End -->
+                
+            </div>
+            <!-- Left Side Content / End -->
+
+
+            <!-- Right Side Content / End -->
+            <div class="right-side">
+                <div class="header-widget">
+                    {% if user.is_authenticated %}
+                    
+                    <a href="/pacientes/nuevo/" class="button border with-icon">Nuevo paciente<i class="sl sl-icon-plus"></i></a>
+                    <!-- User Menu -->
+                    <div class="user-menu">
+                        <div class="user-name"><span><img src="/static/img/dashboard-avatar.jpg" alt=""></span>{{ user.get_username }}</div>
+                        <ul>
+                            {% if user.is_superuser %}
+                            <li><a href="/admin"><i class="sl sl-icon-settings"></i> Administración</a></li>
+                            <li><a href="/descargas"><i class="sl sl-icon-cloud-download"></i> Descargas</a></li>
+                            {% endif %}
+                            <li><a href="/materiales"><i class="sl sl-icon-book-open"></i> Materiales</a></li>
+                            <li><a href="/profile/edit/"><i class="sl sl-icon-user"></i> Mi cuenta</a></li>
+                            <li><a href="/accounts/password/change/"><i class="fa fa-unlock-alt"></i> Cambiar contraseña</a></li>
+                            <li><a href="{% url 'auth_logout' %}?next=/"><i class="sl sl-icon-power"></i> Salir</a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+
+                    <!--a href="/registro/" class="button border with-icon">Regístrate<i class="sl sl-icon-plus"></i></a-->
+                    <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Entrar</a>
+
+                    {% endif %}
+
+
+                    
+                </div>
+            </div>
+            <!-- Right Side Content / End -->
+
+            <!-- Sign In Popup -->
+            <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
+
+                <div class="small-dialog-header">
+                    <h3>Login</h3>
+                </div>
+
+                <!--Tabs -->
+                <div class="sign-in-form style-1">
+
+                    <ul class="tabs-nav">
+                        <li class=""><a href="#tab1">Login</a></li>
+                        <!--li><a href="#tab2">Nueva cuenta</a></li-->
+                    </ul>
+
+                    <div class="tabs-container alt">
+
+                        <!-- Login -->
+                        <div class="tab-content" id="tab1" style="display: none;">
+                            <form id="login_form" method="post" class="login"  action="/accounts/login/">
+				                {% csrf_token %}
+                                <p class="form-row form-row-wide">
+                                    <label for="username">Usuario:
+                                        <i class="im im-icon-Male"></i>
+                                        <input type="text" class="input-text" name="username" id="id_username" value="" />
+                                    </label>
+                                </p>
+
+                                <p class="form-row form-row-wide">
+                                    <label for="password">Contraseña:
+                                        <i class="im im-icon-Lock-2"></i>
+                                        <input class="input-text" type="password" name="password" id="id_password"/>
+                                    </label>
+
+                                </p>
+
+                                <div class="form-row">
+                                    <input type="submit" class="button border margin-top-5" name="login" value="Login" />
+                                </div>
+                                
+                            </form>
+                        </div>
+
+                        <!-- Register 
+                        <div class="tab-content" id="tab2" style="display: none;">
+
+                            <form id="registration_form" method="post" class="register" action="/accounts/register/">
+                             {% csrf_token %}    
+                            <p class="form-row form-row-wide">
+                                <label>Usuario:
+                                    <i class="im im-icon-Male"></i>
+                                    <input type="text" class="input-text" name="username" id="id_username" value="" />
+                                </label>
+                            </p>
+                                
+                            <p class="form-row form-row-wide">
+                                <label>Correo electrónico:
+                                    <i class="im im-icon-Mail"></i>
+                                    <input type="text" class="input-text" name="email" id="id_email" value="" />
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label>Contraseña:
+                                    <i class="im im-icon-Lock-2"></i>
+                                    <input class="input-text" type="password" name="password1" id="id_password1"/>
+                                </label>
+                            </p>
+
+                            <p class="form-row form-row-wide">
+                                <label>Repetir contraseña:
+                                    <i class="im im-icon-Lock-2"></i>
+                                    <input class="input-text" type="password" name="password2" id="id_password2"/>
+                                </label>
+                            </p>
+
+                            <div class="row with-forms">
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="check-30" type="checkbox" name="check">
+                                    <label for="check-30">He leído y acepto la política de proteccón de datos <a href="/proteccion-datos/"> (+leer)</a></label>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <input type="submit" class="button border margin-top-5" name="login" value="Enviar" />
+                            </div>
+                           
+                            </form>
+                        </div>
+                        -->
+
+                    </div>
+                </div>
+            </div>
+            <!-- Sign In Popup / End -->
+
+        </div>
+    </div>
+    <!-- Header / End -->

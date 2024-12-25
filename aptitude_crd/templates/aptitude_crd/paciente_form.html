@@ -1,0 +1,337 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+{% block title %}
+Pacientes
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Pacientes</li>
+<li>{{object}}</li>
+{% endblock breadcrumbs%}
+
+{% block content %}
+
+    <div class="add-listing-section margin-bottom-45">
+
+        <!-- Title -->
+        <div class="row">
+            {{ form.errors }}
+        </div>
+
+    </div>
+
+    {% if request.user.is_superuser %}
+    <div class="add-listing-section margin-bottom-45">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user"></i>{% trans "Paciente" noop %}</h3>
+        </div>
+
+        <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-6">
+                <h3>{% trans "Código asignado" noop %}: {{object}}</h3>
+            </div>
+
+        </div>
+
+    </div>
+    {% endif %}
+
+
+    <div class="add-listing-section margin-bottom-45">
+
+        <!-- Title -->
+        <div class="row">
+            {{ form.errors }}
+        </div>
+
+    </div>
+
+<form action="." method="POST" class="submit-form">
+
+    {% csrf_token %}
+
+    <input type='hidden' id="id_codigo" name="codigo" value="{{object.codigo}}"/>
+    <input type='hidden' id="id_user" name="user" value="{{object.user.id}}">
+    <!-- Section -->
+    <div class="add-listing-section">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user"></i> Datos personales</h3>
+        </div>
+
+        <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-4">
+                <h5>Nombre</h5>
+                <input class="search-field" id="id_nombre" name="nombre" type="text" value="{{ form.nombre.value|default_if_none:'' }}"/>
+            </div>
+            <div class="col-md-4">
+                <h5>Apellidos</h5>
+                <input class="search-field" id="id_apellidos" name="apellidos" type="text" value="{{ form.apellidos.value|default_if_none:'' }}"/>
+            </div>
+            <div class="col-md-4">
+                <h5>DNI</h5>
+                <input class="search-field" id="id_dni" name="dni" type="text" value="{{ form.dni.value|default_if_none:'' }}"/>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Section -->
+    <div class="add-listing-section margin-top-45">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-location"></i> Dirección</h3>
+        </div>
+
+        <div class="submit-section">
+
+            <!-- Row -->
+            <div class="row with-forms">
+
+                <!-- Address 
+                <div class="col-md-6">
+                    <h5>Dirección</h5>
+                    <input type="text" id="id_direccion" name="direccion">
+                </div>
+                -->
+
+                <!-- City -->
+                <div class="col-md-6">
+                    <h5>Ciudad</h5>
+                    {{form.ciudad}}
+                    <!--
+                    <input type="text" id="id_ciudad" name="ciudad" value="{{ form.ciudad.value|default_if_none:'' }}">
+                    -->
+                </div>
+
+                <div class="col-md-6">
+                    <h5>Telefono</h5>
+                    <input type="text" id="id_telefono" name="telefono" value="{{ form.telefono.value|default_if_none:'' }}">
+                </div>
+
+                <!-- Country 
+                <div class="col-md-2">
+                    <h5>Territorio</h5>
+                    <select class="chosen-select-no-single" id="id_territorio" name="territorio">
+                        <option value=0 {% if form.pais.value|default_if_none:0 == 0 %} selected {% endif %}>Navarra</option>
+                        <option value=1 {% if form.pais.value|default_if_none:0 == 1 %} selected {% endif %}>Alt Urgell</option>
+                        <option value=2 {% if form.pais.value|default_if_none:0 == 2 %} selected {% endif %}>Badalona</option>
+                        <option value=3 {% if form.pais.value|default_if_none:0 == 3 %} selected {% endif %}>Baix Ebre</option>
+                        <option value=4 {% if form.pais.value|default_if_none:0 == 4 %} selected {% endif %}>Reus</option>
+                        <option value=5 {% if form.pais.value|default_if_none:0 == 5 %} selected {% endif %}>Ripollès</option>
+
+                    </select>
+                </div>
+                -->
+            </div>
+            <!--
+            <div class="row with-forms">
+                
+                <div class="col-md-3">
+                    <h5>Telefono</h5>
+                    <input type="text" id="id_telefono" name="telefono">
+                </div>
+                
+                <div class="col-md-3">
+                    <h5>Código postal</h5>
+                    <input type="text" id="id_cp" name="cp">
+                </div>
+
+                <div class="col-md-6">
+                    <h5>E-mail</h5>
+                    <input type="text" id="id_email" name="email">
+                </div>
+                
+            </div>
+            -->
+            <!-- Row / End -->
+
+        </div>
+    </div>
+    <!-- Section / End -->
+
+
+    <!-- Section -->
+    <div class="add-listing-section margin-top-45">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-doc"></i> Información básica</h3>
+        </div>
+
+        <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-6">
+                <h5>Sexo</h5>
+                {{ form.sexo }}
+                <!--
+                <select class="chosen-select-no-single" id="id_sexo" name="sexo" value="{{ form.sexo.value|default_if_none:'' }}">
+                    <option value="1">Hombre</option>
+                    <option value="2">Mujer</option>
+                </select>
+                -->
+                <!--
+                <div class="checkboxes in-row margin-bottom-20">
+                    <input id="id_sexo_0" type="checkbox" value="1" name="sexo" {% if form.sexo.value == 1 %} checked {% endif %}>
+                    <label for="id_sexo_0">Hombre</label><br>
+                    
+                    <input id="id_sexo_1" type="checkbox" value="2" name="sexo" {% if form.sexo.value == 2 %} checked {% endif %}>
+                    <label for="id_sexo_1">Mujer</label><br>
+
+                </div>
+                -->
+            </div>
+            <div class="col-md-6">
+                <h5>Fecha de nacimiento</h5>
+                {{ form.fecha_nacimiento }}
+                <!--
+                <input class="search-field" id="id_fecha_nacimiento" name="fecha_nacimiento" placeholder="dd/mm/aaaa" type="text" value="{{ form.fecha_nacimiento.value|date:"d/m/Y" }}"/>
+                -->
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const dateInput = document.getElementById('id_fecha_nacimiento');
+                
+                        dateInput.addEventListener('input', function(e) {
+                            let input = e.target.value;
+                            input = input.replace(/\D/g, '');  // Remove all non-digit characters
+                            console.log(input.length)
+                            // Add slashes at appropriate positions
+                            if (input.length >= 2 && input.length <= 3) {
+                                input = input.substring(0, 2) + '/' + input.substring(2);
+                            } else if (input.length >= 4) {
+                                input = input.substring(0, 2) + '/' + input.substring(2, 4) + '/' + input.substring(4, 8);
+                            }
+                            
+                            e.target.value = input;
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+
+    </div>
+    <!-- Section / End -->
+
+    <!-- Section -->
+    <div class="add-listing-section margin-top-45 margin-bottom-45"">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-doc"></i> Información adicional</h3>
+        </div>
+
+        <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-5">
+                <h5>Nivel máximo estudios que ha completado</h5>
+                {{ form.nivel_estudios }}
+                <!--
+                <div class="checkboxes in-row margin-bottom-20">
+                    <input  id="id_nivel_estudios_0" type="checkbox" value="0" name="nivel_estudios" {% if form.nivel_estudios.value == 0 %} checked {% endif %}>
+                    <label for="id_nivel_estudios_0">Sin estudios (no ha finalizado estudios 1os infantiles o adultos, aunque sepa leer y escribir)</label><br>
+                    
+                    <input id="id_nivel_estudios_1" type="checkbox" value="1" name="nivel_estudios" {% if form.nivel_estudios.value == 1 %} checked {% endif %}>
+                    <label for="id_nivel_estudios_1">Primarios (enseñanza elemental, educación básica o primaria, educación 1ª para adultos)</label><br>
+                    
+                    <input id="id_nivel_estudios_2" type="checkbox" value="2" name="nivel_estudios" {% if form.nivel_estudios.value == 2 %} checked {% endif %}>
+                    <label for="id_nivel_estudios_2">Secundarios (bachillerato, comercio, enseñanza profesional, educación 2ª para adultos)</label><br>
+                    
+                    <input id="id_nivel_estudios_3" type="checkbox" value="3" name="nivel_estudios" {% if form.nivel_estudios.value == 3 %} checked {% endif %}>
+                    <label for="id_nivel_estudios_3">Universitarios (grado, diplomatura, licenciatura, doctorado)</label><br>
+                </div>
+                -->
+                <!--
+                <select class="chosen-select-no-single" id="id_nivel_estudios" name="nivel_estudios" value="{{ form.nivel_estudios.value|default_if_none:'0' }}">
+                    <option value="0">Sin estudios (no ha finalizado estudios 1os infantiles o adultos, aunque sepa leer y escribir)</option>
+                    <option value="1">Primarios (enseñanza elemental, educación básica o primaria, educación 1ª para adultos)</option>
+                    <option value="2">Secundarios (bachillerato, comercio, enseñanza profesional, educación 2ª para adultos)</option>
+                    <option value="3">Universitarios (grado, diplomatura, licenciatura, doctorado)</option>
+                </select>
+                -->
+            </div>
+            <div class="col-md-4">
+                <h5>¿Dónde vive usted?</h5>
+                {{ form.vivienda }}
+                <!--
+                <div class="checkboxes in-row margin-bottom-20">
+                <input  id="id_vivienda_0" type="checkbox" value="0" name="vivienda" {% if form.vivienda.value == 0 %} checked {% endif %}>
+                <label for="id_vivienda_0">En su casa</label><br>
+                
+                <input id="id_vivienda_1" type="checkbox" value="1" name="vivienda" {% if form.vivienda.value == 1 %} checked {% endif %}>
+                <label for="id_vivienda_1">En casa de un hijo/hija</label><br>
+                
+                <input id="id_vivienda_2" type="checkbox" value="2" name="vivienda" {% if form.vivienda.value == 2 %} checked {% endif %}>
+                <label for="id_vivienda_2">En casa de otro familiar</label><br>
+                
+                <input id="id_vivienda_3" type="checkbox" value="3" name="vivienda" {% if form.vivienda.value == 3 %} checked {% endif %}>
+                <label for="id_vivienda_3">En un piso para personas mayores</label><br>
+                </div>
+                -->
+                <!--
+                <select class="chosen-select-no-single" id="id_vivienda" name="vivienda" value="{{ form.vivienda.value|default_if_none:'1' }}">
+                    <option value="1">En su casa</option>
+                    <option value="2">En casa de un hijo/hija</option>
+                    <option value="3">En casa de otro familiar</option>
+                    <option value="4">En un piso para personas mayores</option>
+                </select>
+                -->
+            </div>
+            <div class="col-md-3">
+                <h5>¿Con cuantas personas convive? </h5>
+                <input type="number" id="id_convivientes" name="convivientes" value="{{ form.convivientes.value|default_if_none:'0' }}">
+            </div>
+        </div>
+
+    </div>    
+
+    <!-- Section -->
+    <div class="add-listing-section margin-top-45 margin-bottom-45"">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-doc"></i> Consentimiento informado</h3>
+        </div>
+        
+        <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-5">
+                <h5>Consentimiento informado firmado</h5>
+                
+            </div>
+            <div class="checkboxes in-row margin-bottom-20">
+					
+                <input id="id_consentimiento_informado" type="checkbox" name="consentimiento_informado" required {% if object.consentimiento_informado %} checked {% endif %}>
+                <label for="id_consentimiento_informado">{% trans "Sí" noop %}</label>
+            <div>
+        </div>
+
+    </div>
+
+    <input type="submit" name="update_button" value="{% trans 'Guardar y continuar a la evaluación' noop %}" />
+
+    </form>
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

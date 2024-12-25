@@ -1,0 +1,122 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Nueva evaluación
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Evaluación</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+<div class="row">
+		
+		<div class="col-md-12">
+			<h4 class="headline margin-top-0 margin-bottom-30">Tabs Style 1</h4>
+
+			<div class="style-1">
+
+				<!-- Tabs Navigation -->
+				<ul class="tabs-nav">
+                    {% for cuestionario in cuestionarios %}
+                    <li {% if forloop.counter == 1 %} class="active" {% endif %}>
+                        <a href="#tab{{ forloop.counter }}">{{ cuestionario.cuestionario.nombre }}</a>
+                    </li>
+                    {% endfor %}
+                    <li class="active"><a href="#tab1b">First Tab</a></li>
+					<li><a href="#tab2b">Second Tab</a></li>
+					<li><a href="#tab3b">Third Tab</a></li>
+				</ul>
+
+				<!-- Tabs Content -->
+				<div class="tabs-container">
+                        {% for form in formularios %}
+
+                        <div class="tab-content" id="tab{{ forloop.counter }}">
+                            {{ form.instance.cuestionario.descripcion }}
+                        
+
+                            <form id="resource_form" method="post" class="with-forms" action=".">
+
+                            {% csrf_token %}    
+                            {{ form.errors }}
+                            
+                            {% for field in form.hidden_fields %}
+                            {{field}}
+                            {% endfor %}
+
+                            <div class="row with-forms">  
+                                <div class="col-md-12">
+            
+                                    {% for field in form.visible_fields %}
+            
+            
+                                    <h3> {{ field.label }} ({{field.value.0}})</h3>
+            
+            
+                                    {% if field.field.choices %}
+                                    <div class="checkboxes in-row margin-bottom-40">
+                                    
+                                        
+                                            {% for c in field.field.choices %}
+            
+                                            <input class='like-radio' id="{{ field.auto_id}}_{{ forloop.counter0 }}" type="checkbox" 
+                                                   value="{{ c.0 }}" name="{{ field.name }}"
+                                                   {% ifequal c.0 field.value.0 %} checked {% endifequal %}
+                                            >
+                                            <label for="{{ field.auto_id}}_{{ forloop.counter0 }}">{{ c.1 }} ({{c.0}})</label><br/>
+                                            {% endfor %}
+                                            
+                                    
+                                    </div>
+                                    {% endif %}
+            
+            
+                                    {% endfor %}
+
+    
+                                    <input type="submit" name="update_button" value="Update" />
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+            
+            
+                    
+
+                        
+                        {% endfor %}
+                        <div class="tab-content" id="tab1b">
+                                Lorem ipsum pharetra lorem felis. Aliquam egestas consectetur elementum class aptentea taciti sociosqu ad litora torquent perea conubia nostra lorem consectetur adipiscing elit. Donec vestibulum justo a diam ultricies pellentesque.
+                            </div>
+        
+                            <div class="tab-content" id="tab2b">Aenean dolor mi, luctus et laoreet hendrerit, condimentum faucibus mi. Nam et sem eros. Sed sed eros nec massa pellentesque accumsan in nec magna. Donec sollicitudin enim nec justo mollis bibendum. Nulla eleifend mollis velit. Ut sed risus eget metus egestas sagittis. Etiam vestibulum interdum turpis.</div>
+        
+                            <div class="tab-content" id="tab3b">Suspendisse ut laoreet massa. Etiam vel dolor eu quam varius tempor eu eu mi. Duis auctor interdum ligula ut faucibus. Vivamus lorem ipsum dolor sit amet in tincidunt augue. Aenean at ligula justo, sed gravida metus. </div>
+
+				</div>
+
+			</div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Gracias
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Registro</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+<p>Su inscripción en el registro se ha realizado correctamente. Los miembros del equipo APTITUDE se pondrán en contacto con usted cuando haya alguna iniciativa acorde sus intereses seleccionados. Gracias por su interés y participación en el Proyecto APTITUDE. </p>
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Nueva evaluación
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Evaluación</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+<form action="." method="POST" class="submit-form">
+    {% csrf_token %}
+
+    <div class="row with-forms">
+        <div class="col-md-12">
+
+            <h5>Motivo de evaluación:</h5>
+            <select class="chosen-select-no-single" id="id_motivo" name="motivo">
+
+                    <option value="0">Sospecha de situación de fragilidad</option>
+        
+                    <option value="1">Sospecha de deterioro cognitiva</option>
+        
+                    <option value="2">Seguimiento</option>
+        
+                    <option value="-1">Motivo desconocido</option>
+            </select>
+
+        </div>
+
+        <div class="col-md-12 checkboxes in-row margin-bottom-20">
+            <input id="id_muestra" type="checkbox" name="muestra" {% if muestra_previa %} checked {% endif %}>
+            <label for="id_muestra">{% trans "Recoge muestra" noop %}</label>
+        </div>        
+    </div>
+
+
+    {% if muestra_previa %}
+    <div class="notification success closeable margin-bottom-20">
+        <p><span>Encontrada muestra previa.</span> Deberas recoger muestra en esta visita.</p>
+        <a class="close"></a>
+    </div>
+    {% endif %}
+    <input type="submit" name="update_button" value="{% trans 'Guardar' noop %}" />
+</form>
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

@@ -1,0 +1,246 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript">
+  function imc() {
+	  peso = parseFloat(document.getElementsByName("{{variables.c121.nombre}}")[0].value);
+    altura = parseFloat(document.getElementsByName("{{variables.c120.nombre}}")[0].value);
+    imc_calc = document.getElementsByName("{{variables.c122.nombre}}")[0];
+
+    if (peso && altura) {
+      console.log((peso / (altura*altura)).toString());
+      imc_calc.value = (10000*peso / (altura*altura)).toFixed(2).toString();
+    }
+  }
+</script>
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Nueva evaluación
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Evaluación</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+    {% if request.user.is_superuser %}
+
+    <div class="add-listing-section">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user"></i>{% trans "Paciente" noop %}</h3>
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-6">
+                <h5>{% trans "Código" noop %}</h5>
+                <input class="search-field" id="id_contact_person" name="contact_person" value="{{object.paciente}}" type="text"/>
+            </div>
+        </div>
+
+    </div>
+
+    {% endif %}
+
+     <!-- Section -->
+     <div class="add-listing-section margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-notebook"></i>{% trans "Detalle de la visita" noop %} </h3>
+            {{ form.errors }}
+        </div>
+
+        <div class="row with-forms">
+                <div class="col-md-6">
+                    <h4>{% trans "Fecha de la visita" noop %}</h4>
+                    <h3>{{ object.fecha }}</h3>
+                    <!--
+                    <input class="search-field" id="id_shortname" name="shortname" type="text" value=""/>
+                    -->
+                </div>
+                <div class="col-md-6">
+                    <h4>{% trans "Evaluador" noop %}:</h4>
+                    <h3>{{object.user.first_name}} {{object.user.last_name}}</h3>
+                    <!--
+                    <select class="chosen-select-no-single" id="id_country" name="country">
+                        <option value="" label="blank">Evaluador</option>
+                        <option value="H">enfermera especialista en geriatria</option>
+                        <option value="M">enfermera otros</option>
+                        <option value="M">médico general</option>
+                        <option value="M">equipo multidisciplinar</option>
+                        <option value="M">médico residente</option>
+                        <option value="M">otros</option>
+
+                    </select>
+                    -->
+                </div>
+
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-6">
+                <h4>{% trans "Motivo de evaluación" noop %}</h4>
+                <h3>{{object.motivo_evaluacion}}</h3>
+                <!--
+                <select class="chosen-select-no-single" id="id_country" name="country">
+                    <option value="" label="blank">{% trans "Motivo de evaluación" noop %}</option>
+                    <option value="H">{% trans "impresión de fragilidad" noop %}</option>
+                    <option value="M">{% trans "queja cognitiva" noop %}</option>
+                    <option value="M">{% trans "desconocido" noop %}</option>
+                    <option value="M">{% trans "Motivo de evaluación" noop %}</option>
+                    <option value="M">{% trans "Motivo de evaluación" noop %}</option>
+                </select>
+                -->
+            </div>
+
+            <!--
+            <div class="col-md-6">
+                <h3>{% trans "Intervención" noop %}</h3>
+                <select class="chosen-select-no-single" id="id_country" name="country">
+                    <option value="0" label="blank">{% trans "Ninguna" noop %}</option>
+                    <option value="H">{% trans "intervención social" noop %}</option>
+                    <option value="M">{% trans "intervención física" noop %}</option>
+                    <option value="M">{% trans "intervención cognitiva" noop %}</option>
+                    <option value="M">{% trans "intervención nutricional" noop %}</option>
+                    <option value="M">{% trans "intervención psicológica" noop %}</option>
+                    <option value="M">{% trans "Otras intervenciones" noop %}</option>
+                </select>
+            </div>
+            -->
+        </div>
+
+    </div>
+
+    {% if object.muestra %}
+
+    <div class="add-listing-section  margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-drop"></i>{% trans "Muestras biológicas" noop %}</h3>
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-4">
+                <h4>{% trans "Código" noop %}</h4>
+                <h3>{{object.codigo_muestra}}</h3>
+            </div>
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    <div class="add-listing-section margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-heart"></i>{% trans "Variables antropométricas" noop %}</h3>
+        </div>
+
+        <form action="{{ variables_url }}" method="POST" class="submit-form">
+        {% csrf_token %}
+
+        <input type="hidden" name="visita" value="{{ object.id }}" id="id_visita">
+
+        <input type="hidden" name="cuestionario" value="13" id="id_cuestionario">
+
+        <input type="hidden" name="completada" value="False" id="id_completada">
+
+        <div class="row with-forms">
+            <div class="col-md-4">
+                <h5>{% trans "Talla (cm)" noop %}</h5>
+                <input class="search-field" id="id_{{variables.c120.nombre}}" name="{{variables.c120.nombre}}" value="{{variables.c120.valor}}" type="text" onchange="imc();"/>
+            </div>
+            <div class="col-md-4">
+                <h5>{% trans "Peso (kg)" noop %}</h5>
+                <input class="search-field" id="id_{{variables.c121.nombre}}" name="{{variables.c121.nombre}}" value="{{variables.c121.valor}}" type="text"  onchange="imc();"/>
+            </div>
+            <div class="col-md-4">
+                <h5>{% trans "IMC" noop %}</h5>
+                <input class="search-field" id="id_{{variables.c122.nombre}}" name="{{variables.c122.nombre}}" value="{{variables.c122.valor}}" type="text"/>
+            </div>
+
+        </div>
+        <!--
+        <div class="row with-forms">
+            <div class="col-md-6">
+                <h5>{% trans "Tensión arterial sistólica" noop %}</h5>
+                <input class="search-field" id="id_{{variables.c123.nombre}}" name="{{variables.c123.nombre}}" value="{{variables.c123.valor}}" type="text" placeholder="Tensión arterial sistólica"/>
+            </div>
+            <div class="col-md-6">
+                <h5>{% trans "Tensión arterial diastólica" noop %}</h5>
+                <input class="search-field" id="id_{{variables.c153.nombre}}" name="{{variables.c153.nombre}}" value="{{variables.c153.valor}}" type="text" placeholder="Tensión arterial diastólica"/>
+            </div>
+        </div>
+-       ->
+
+        <div class="row with-forms">
+            <!--
+            <div class="col-md-6">
+                <h5>{% trans "Frecuencia cardiaca" noop %}</h5>
+                <input class="search-field" id="id_{{variables.c124.nombre}}" name="{{variables.c124.nombre}}" value="{{variables.c124.valor}}" type="text"/>
+            </div>
+            -->
+            <div class="col-md-4">
+                <h5>{% trans "Fuerza de agarre de la mano dominante" noop %}</h5>
+                <input class="search-field" id="id_{{variables.c125.nombre}}" name="{{variables.c125.nombre}}" value="{{variables.c125.valor}}" type="text"/>
+            </div>
+            <div class="col-md-8"> 
+                <p>&nbsp;&nbsp;</p>
+            </div>
+            <!--
+            <div class="col-md-6">
+                <h5>{% trans "Mano izquierda" noop %}</h5>
+                <input class="search-field" id="id_{{variables.c126.nombre}}" name="{{variables.c126.nombre}}" value="{{variables.c126.valor}}" type="text"/>
+            </div>
+            -->
+        </div>
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const field1 = document.getElementById("id_{{variables.c120.nombre}}");
+                const field2 = document.getElementById("id_{{variables.c121.nombre}}");
+                const calculatedField = document.getElementById("id_{{variables.c122.nombre}}");
+    
+                function calculate() {
+                    const height = parseFloat(field1.value) || 0;
+                    const weight = parseFloat(field2.value) || 0;
+                    const bmi = weight / (height * height);// BMI
+                    calculatedField.value =  bmi.toFixed(2);  
+                }
+    
+                field1.addEventListener("input", calculate);
+                field2.addEventListener("input", calculate);
+            });
+        </script>
+
+        <input type="submit" name="update_button" value="{% trans 'Guardar' noop %}" />
+        </form>
+    </div>
+
+    <div class="margin-top-45">
+
+        <a href="{{ screening_url }}" class="button border with-icon">Screening ICOPE (Step 1)  <i class="sl  sl-icon-arrow-right-circle "></i></a>
+
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

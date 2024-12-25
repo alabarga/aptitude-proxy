@@ -1,0 +1,15 @@
+{% extends "profile/base.html" %}
+{% load static %}
+
+{% block title %}Edit Profile | {{ user }} {{ super }}{% endblock %}
+
+{% block body %}
+    <div class="grid-100">
+        <h1>Profile</h1>
+        <form method="POST" actions="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="button" value="save" />
+        </form>
+    </div>
+{% endblock %}

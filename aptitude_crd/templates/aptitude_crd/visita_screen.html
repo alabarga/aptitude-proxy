@@ -1,0 +1,137 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Nueva evaluación
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Evaluación</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+    {% if request.user.is_superuser %}
+
+    <div class="add-listing-section">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user"></i>{% trans "Paciente" noop %}</h3>
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-4">
+                <h5>{% trans "Código" noop %}</h5>
+                <input class="search-field" id="id_contact_person" name="contact_person" value="{{object.visita.paciente}}" type="text"/>
+            </div>
+        </div>
+
+    </div>
+
+    {% endif %}
+
+     <!-- Section -->
+     <div class="add-listing-section margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-notebook"></i>{% trans "Detalle de la visita" noop %} </h3>
+            {{ form.errors }}
+        </div>
+
+        <div class="row with-forms">
+                <div class="col-md-6">
+                    <h4>{% trans "Fecha de la visita" noop %}</h4>
+                    <h3>{{ object.visita.fecha }}</h3>
+                    <!--
+                    <input class="search-field" id="id_shortname" name="shortname" type="text" value=""/>
+                    -->
+                </div>
+                <div class="col-md-6">
+                    <h4>{% trans "Evaluador" noop %}:</h4>
+                    <h3>{{object.visita.user.first_name}} {{object.visita.user.last_name}}</h3>
+                    <!--
+                    <select class="chosen-select-no-single" id="id_country" name="country">
+                        <option value="" label="blank">Evaluador</option>
+                        <option value="H">enfermera especialista en geriatria</option>
+                        <option value="M">enfermera otros</option>
+                        <option value="M">médico general</option>
+                        <option value="M">equipo multidisciplinar</option>
+                        <option value="M">médico residente</option>
+                        <option value="M">otros</option>
+
+                    </select>
+                    -->
+                </div>
+
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-6">
+                <h4>{% trans "Motivo de evaluación" noop %}</h4>
+                <h3>{{object.visita.motivo_evaluacion}}</h3>
+                <!--
+                <select class="chosen-select-no-single" id="id_country" name="country">
+                    <option value="" label="blank">{% trans "Motivo de evaluación" noop %}</option>
+                    <option value="H">{% trans "impresión de fragilidad" noop %}</option>
+                    <option value="M">{% trans "queja cognitiva" noop %}</option>
+                    <option value="M">{% trans "desconocido" noop %}</option>
+                    <option value="M">{% trans "Motivo de evaluación" noop %}</option>
+                    <option value="M">{% trans "Motivo de evaluación" noop %}</option>
+                </select>
+                -->
+            </div>
+
+            <!--
+            <div class="col-md-6">
+                <h3>{% trans "Intervención" noop %}</h3>
+                <select class="chosen-select-no-single" id="id_country" name="country">
+                    <option value="0" label="blank">{% trans "Ninguna" noop %}</option>
+                    <option value="H">{% trans "intervención social" noop %}</option>
+                    <option value="M">{% trans "intervención física" noop %}</option>
+                    <option value="M">{% trans "intervención cognitiva" noop %}</option>
+                    <option value="M">{% trans "intervención nutricional" noop %}</option>
+                    <option value="M">{% trans "intervención psicológica" noop %}</option>
+                    <option value="M">{% trans "Otras intervenciones" noop %}</option>
+                </select>
+            </div>
+            -->
+        </div>  
+
+    </div>
+
+    <div class="add-listing-section  margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-drop"></i>{% trans "Screening" noop %}</h3>
+        </div>
+        {% include 'aptitude_crd/screening_form.html' %}
+
+    </div>
+
+    <!--
+    <div class="margin-top-45">
+
+        <a href="cerrar/" class="button border with-icon">Terminar evaluación  <i class="sl  sl-icon-arrow-right-circle "></i></a>
+
+    </div>
+
+    -->
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

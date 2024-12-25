@@ -1,0 +1,170 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% load cuestionarios %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+{% block title %}
+{{evaluacion.cuestionario.nombre}}
+{% endblock title%}
+{% block breadcrumbs %}
+
+{% endblock breadcrumbs%}
+
+{% block content %}
+
+    <div>
+
+    <!--
+    <h4>
+    {{ evaluacion.cuestionario.descripcion |safe }}
+    </h4>
+    -->
+
+    {% if evaluacion.cuestionario.guia %}
+        <p>
+            <a href="/media/{{ evaluacion.cuestionario.guia }}">
+              <i class="sl sl-icon-docs"></i> Descargar instrucciones</a>
+        </p>
+    {% endif %}
+
+    {% if evaluacion.cuestionario.id == 11 %}
+        <img src="/media/SPPB_help.png">
+    {% endif%}
+    </div>
+
+
+
+    <form id="resource_form" method="post" class="with-forms" action=".">
+
+        {% csrf_token %}
+        {{ form.errors }}
+
+        {% for field in form.hidden_fields %}
+        {{field}}
+        {% endfor %}
+
+        <!-- Section -->
+        <div class="add-listing-section margin-top-45">
+
+
+            <!-- Headline 
+            <div class="add-listing-headline">
+                <h3><i class="sl sl-icon-note"></i>{% trans "Cuestionario" noop %}</h3>
+            </div>
+            -->
+
+            <div class="row with-forms">
+                    <div class="col-md-12">
+
+                    {% for nombre_bloque in form.visible_fields|bloques %}
+
+                        <h3><i class="sl sl-icon-note"></i> {{ nombre_bloque|default_if_none:"" }}</h3>
+
+
+                        {% for field in form.visible_fields|bloque:nombre_bloque %}
+            
+                        {% if field.field.alert %} 
+                         <div class="special-question">
+                        {% elif field.field.navarra %}
+                         <div class="navarra-question">
+                        {% else %}
+                        <div class="question-box">
+                        {% endif%}
+                        
+                          <h4> {{ field.label }}</h4>
+                          {% if field.label != field.help_text %}
+                          <p> {{ field.help_text }}</p>
+                          {% endif %}
+
+                        {% if field.field.tipo == 'VAL' %} <!-- field.field.choices -->
+                            <div class="checkboxes in-row margin-bottom-40">
+
+                                {% for c in field.field.choices %}
+                                <input class='like-radio' id="{{ field.auto_id}}_{{ forloop.counter0 }}" type="checkbox"
+                                        value="{{ c.0 }}" name="{{ field.name }}"
+                                        {% ifequal c.0 field.value.0 %} checked {% endifequal %}
+                                >
+                                <label for="{{ field.auto_id}}_{{ forloop.counter0 }}">{{ c.1 }}</label><br/>
+                                {% endfor %}
+
+                            </div>
+                        {% elif field.field.tipo == 'MULTIPLE' %} <!-- field.field.choices -->
+                            <div class="checkboxes in-row margin-bottom-40">
+
+                                {% for c in field.field.choices %}
+
+                                <input class='notlike-radio' id="{{ field.auto_id}}_{{ forloop.counter0 }}" type="checkbox"
+                                        value="{{ c.0 }}" name="{{ field.name }}"
+                                        {% if c.0 in field.value.0 %} checked {% endif %}
+                                >
+                                <label for="{{ field.auto_id}}_{{ forloop.counter0 }}">{{ c.1 }}</label><br/>
+                                {% endfor %}
+
+                            </div>
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+
+                        {% if field.label == 'IMC' %}
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                const field1 = document.getElementById("id_pregunta_{{ id_height }}");
+                                const field2 = document.getElementById("id_pregunta_{{ id_weight }}");
+                                const calculatedField = document.getElementById("id_pregunta_{{ id_imc }}");
+                    
+                                function calculate() {
+                                    const h = parseFloat(field1.value) || 0;
+                                    const w = parseFloat(field2.value) || 0;
+                                    const bmi = 10000 * w / (h * h);// BMI
+                                    calculatedField.value =  bmi.toFixed(1);  
+                                }
+                    
+                                field1.addEventListener("input", calculate);
+                                field2.addEventListener("input", calculate);
+                            });
+                        </script>
+                        {% endif %}
+                    </div>
+
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+
+
+        <input type="submit" name="update_button" value="{% trans 'Guardar' noop %}" />
+
+        </div>
+    </form>
+
+
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+          $('.like-radio').click(function(){
+                Checkbox_to_RadioButton(this);
+          });
+    });
+    function Checkbox_to_RadioButton(box){
+          $('input:checkbox[name=' + box.name + ']').each(function(){
+                if (this != box) $(this).attr('checked', false);
+          });
+    }
+    </script>
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

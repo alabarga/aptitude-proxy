@@ -1,0 +1,74 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'django_dropimages/css/dropzone.css' %}" />
+<script src="{% static 'django_dropimages/js/dropzone.js' %}"></script>
+<script>
+    // http://stackoverflow.com/questions/8567114/how-to-make-an-ajax-call-without-jquery
+    function loadXMLDoc(url) {
+        var xmlhttp;
+
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+               if(xmlhttp.status == 200){
+                   document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+               }
+               else if(xmlhttp.status == 400) {
+                   alert('There was an error 400')
+               }
+               else {
+                   alert('something else other than 200 was returned')
+               }
+            }
+        };
+
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+
+    var gallery_pk = undefined;
+
+    Dropzone.options.djangoDropimagesDropzone = {
+        url: function() { return "{{ upload_url }}?gallery_id={{ gallery_id }}" },
+        parallelUploads: 1,
+        maxFilesize: 12,
+        acceptedFiles: "image/png,image/gif,image/jpg,image/jpeg",
+        addRemoveLinks: true,
+        dictDefaultMessage: "{{ dict_default_message }}",
+        dictFileTooBig: "Shown when the file is too big. {{filesize}} and {{maxFilesize}} will be replaced.",
+        dictResponseError: "Shown as error message if the server response was invalid. {{statusCode}} will be replaced with the servers status code.",
+        dictInvalidFileType: "Shown as error message if the file doesn't match the file type.",
+        dictCancelUpload: "If addRemoveLinks is true, the text to be used for the cancel upload link.",
+        dictCancelUploadConfirmation: "If addRemoveLinks is true, the text to be used for confirmation when cancelling upload.",
+        dictRemoveFile: "remove",
+        init: function() {
+            this.on("removedfile", function(file) {
+                loadXMLDoc("{{ delete_url }}?gallery_id={{ gallery_id }}&original_filename="+file.name);
+            });
+            this.on("success", function(file, response) {
+                gallery_pk = response.gallery_pk;
+            });
+            this.on("queuecomplete", function() {
+                {% if id_to_show %}
+                    var obj_to_show = document.getElementById("{{ id_to_show }}");
+                    if (obj_to_show != undefined) {
+                        obj_to_show.style.display = "block";
+                    }
+                {% endif %}
+                {% if gallery_field_id %}
+                    var select_obj = document.getElementById("{{ gallery_field_id }}");
+                    if (select_obj != undefined){
+                        select_obj.options.length = 0;
+                        select_obj.options[select_obj.options.length] = new Option(gallery_pk, gallery_pk);
+                    }
+                {% endif %}
+            });
+        }
+    };
+</script>

@@ -1,0 +1,58 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+{% block title %}
+Pacientes
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Pacientes</li>
+<li>Listado</li>
+{% endblock breadcrumbs%}
+
+{% block content %}
+
+{% if request.user.is_superuser %}
+
+    {% for paciente in object_list %}
+    <div class="add-listing-section">
+
+            <!-- Headline -->
+            <div class="add-listing-headline">
+                <h3><i class="sl sl-icon-user"></i>{% trans "Paciente" noop %}</h3>
+            </div>
+
+            <!-- Title -->
+            <div class="row with-forms">
+                <div class="col-md-8">
+                    <h5>{% trans "Código" noop %}</h5>
+                    <input class="search-field" id="id_contact_person" name="contact_person" value="{{paciente}}" type="text"/>
+                </div>      
+                <div class="col-md-4">
+
+                        <a href="/pacientes/{{paciente.id}}"  class="button preview">Ver paciente<i class="fa fa-arrow-circle-right"></i></a>
+                    
+                </div>                      
+            </div>
+
+        </div>
+
+    {% endfor %}
+    
+ {% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

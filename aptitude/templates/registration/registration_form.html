@@ -1,0 +1,76 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Register for an account" %}{% endblock %}
+
+{% block content %}
+
+
+<div class="add-listing-section margin-top-45">
+
+    <!-- Headline -->
+    <div class="add-listing-headline">
+        <h3><i class="sl sl-icon-doc"></i>Datos</h3>
+    </div>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <p class="required"><label class="required" for="id_cargo">Cargo o profesional:</label> <input type="text" name="cargo" maxlength="150" autofocus="" required="" id="id_cargo"> <span class="helptext">Introduzca su cargo o categoría profesional</span></p>
+        <p class="required"><label class="required" for="id_lugar_trabajo">Lugar de trabajo:</label> <input type="text" name="lugar_trabajo" maxlength="150" autofocus="" required="" id="id_lugar_trabajo"> <span class="helptext">Lugar de trabajo</span></p>
+
+        <div class="row with-forms ">
+            <div class="col-md-12 checkboxes in-row">
+                <input id="toggle" type="checkbox" name="check" required>
+                <label for="toggle">{% trans "He leído y acepto los términos y condiciones" noop %}</label>
+                <a href="/terminos-condiciones/"> (+leer)</a>
+            </div>
+        </div>
+        <div class="row with-forms margin-top-20">
+        <input id="enviar" type="submit" value="{% trans 'Enviar' %}" />
+        </div>
+    </form>
+
+    <!-- Title -->
+
+</div>
+
+<!--
+    <div class="add-listing-section margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-doc"></i>INFORMACIÓN BÁSICA SOBRE PROTECCIÓN DE DATOS</h3>
+        </div>
+
+        <div>
+
+            <table class="basic-table">
+
+                <tbody>
+                    <tr>
+                        <td data-label="Column 1">Responsable</td>
+                        <td data-label="Column 2">FUNDACION MIGUEL SERVET-NAVARRABIOMED</td>
+                    </tr>
+
+                    <tr>
+                        <td data-label="Column 1">Finalidad</td>
+                        <td data-label="Column 2">Creación y mantenimiento de una base de datos sociodemográficos y de contacto de personas mayores de 65 años que estén interesadas en participar en futuros proyectos de investigación relacionadas con las áreas de interés propuestas.</td>
+                    </tr>
+
+                    <tr>
+                        <td data-label="Column 1">Derechos</td>
+                        <td data-label="Column 2">Tienes derecho a acceder, rectificar y suprimir los datos, así como otros derechos, como se explica en la información adicional.</td>
+                    </tr>
+
+                    <tr>
+                        <td data-label="Column 1">Información adicional</td>
+                        <td data-label="Column 2">Puedes consultar la información adicional y detallada sobre <a href="/proteccion-datos">Protección de Datos aquí</a></td>
+                    </tr>
+                </tbody>
+        </table>
+        </div>
+    </div>
+-->
+
+{% endblock %}

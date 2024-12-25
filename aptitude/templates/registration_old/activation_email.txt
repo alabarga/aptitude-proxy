@@ -1,0 +1,8 @@
+{% load i18n %}
+
+Thanks for joining onconet-sudoe.org collaborative resource map.
+
+To activate your account, click the link below:
+
+http://{{ site.domain }}{% url 'registration_activate' activation_key %}
+

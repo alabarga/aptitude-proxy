@@ -1,0 +1,113 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+{% block title %}
+Pacientes
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Pacientes</li>
+<li>{{object}}</li>
+{% endblock breadcrumbs%}
+
+{% block content %}
+
+    {% if request.user.is_superuser %}
+    <div class="add-listing-section margin-bottom-45">
+
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user"></i>{% trans "Paciente" noop %}</h3>
+        </div>
+
+        <!-- Title -->
+        <div class="row with-forms">
+            <div class="col-md-6">
+                <h3>{% trans "Código asignado" noop %}: {{object}}</h3>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    
+
+	<div class="messages-headline">
+        {% if visitas %}
+		<h4>Visitas</h4>
+        {% else %}
+        <h4>No hay visitas</h4>
+        {% endif %}
+
+	</div>
+
+	
+	<div class="messages-inbox">
+        
+
+
+		<ul>
+
+        {% for visita in visitas %}
+
+        <li>
+            <a href="/visita/{{visita.id}}/step{{visita.motivo}}/">
+                <div class="message-avatar"><img loading="lazy" decoding="async" src="https://listeo.pro/wp-content/uploads/2023/06/cropped-user-profile-avatar-590x590-1-4.jpg" class="avatar avatar-70 photo" width="70" height="70" alt="Tom Wilson"></div>
+
+                    <div class="message-by">
+                        <div class="message-by-headline dashboard-stats color-2">
+                        <h5>{{visita}}  
+                            <span class="mes_referral" style="float:none;"> 
+                                {% if visita.tiene_dominios_afectados %}
+                                Dominios afectados
+                                {% endif %}
+                            </span>																			</h5>
+                            <span>
+                                {% if visita.cuestionarios_completos %}
+                                Completada
+                                {% else %}
+                                Pendiente
+                                {% endif %}
+                            </span>								
+                        </div>
+                        <p><i class="fa fa-mail-forward"></i> Navarrabiomed</p>
+                    </div>
+                </a>
+        </li>
+
+        {% endfor %}
+
+		</ul>
+	</div>
+
+    <div class="margin-top-45">
+        {% if not step1_pending %}
+        <a href="step_1/" class="button border with-icon">Screening ICOPE (Step 1)  <i class="sl  sl-icon-arrow-right-circle "></i></a>
+        {% endif%}
+        
+        {% if step1_finished and False %}
+        <a href="step_2/" class="button border with-icon">Screening completo (Step 2)  <i class="sl  sl-icon-arrow-right-circle "></i></a>
+        {% endif%}
+        
+
+    </div>
+
+    {% endif %}
+
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

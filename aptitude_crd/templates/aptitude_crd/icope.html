@@ -1,0 +1,33 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Gracias
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Registro</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+{% include 'aptitude_crd/screening_form.html' %}
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

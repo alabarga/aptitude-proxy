@@ -1,0 +1,73 @@
+{% extends 'oncomap/base.html' %}
+
+{% block slider %}
+<div id="titlebar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2>Registration</h2>
+
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li>Registration</li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Container / Start -->
+<div class="container">
+
+
+    <div class="row">
+
+
+        <div class="col-lg-8 col-md-8 padding-right-30">
+
+            <form id="registration_form" method="post" class="register" action="/accounts/register/">
+                 {% csrf_token %}    
+                 {{ form.errors }}
+                <p class="form-row form-row-wide">
+                    <label>Username:
+                        <i class="im im-icon-Male"></i>
+                        <input type="text" class="input-text" name="username" id="id_username" value="" />
+                    </label>
+                </p>
+                    
+                <p class="form-row form-row-wide">
+                    <label>Email Address:
+                        <i class="im im-icon-Mail"></i>
+                        <input type="text" class="input-text" name="email" id="id_email" value="" />
+                    </label>
+                </p>
+
+                <p class="form-row form-row-wide">
+                    <label>Password:
+                        <i class="im im-icon-Lock-2"></i>
+                        <input class="input-text" type="password" name="password1" id="id_password1"/>
+                    </label>
+                </p>
+
+                <p class="form-row form-row-wide">
+                    <label>Repeat Password:
+                        <i class="im im-icon-Lock-2"></i>
+                        <input class="input-text" type="password" name="password2" id="id_password2"/>
+                    </label>
+                </p>
+
+                <input type="submit" class="button border fw margin-top-10" name="register" value="Register" />
+
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

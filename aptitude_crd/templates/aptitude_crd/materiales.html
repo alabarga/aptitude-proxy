@@ -1,0 +1,85 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Materiales
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Registro</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+<h2>Consentimientos informados</h2>
+
+<p>
+<a href="/media/consentimientos/consentimiento_informado_base_de_datos_fragilidad.pdf">- Hoja informativa y consentimiento informado de la base de datos</a>
+</p>
+<p>
+<a href="/media/consentimientos/consentimiento_informado_registro_EFA.pdf">- Consentimiento informado Registro EFA</a>
+</p>
+
+<h2>Cuestionarios</h2>
+
+<p>
+<a href="/media/docs/1_IndiceBarthel.pdf">Indice de Barthel</a>
+</p>
+
+<p>
+<a href="/media/docs/2_Escala_lawton_brody.pdf">Escala de Lawton Brody</a>
+</p>
+
+<p>
+<a href="/media/docs/7_Short Physical_Performance_Battery.pdf">Short Physical Performance Battery</a>
+</p>
+
+<p>
+<a href="/media/docs/9_Criterio_fragilidad_Fried.pdf">Criterio de fragilidad de Fried</a>
+</p>
+
+<p>
+<a href="/media/docs/3_mmse30.pdf">Mini-Mental State Examination (MMSE)</a>
+</p>
+
+<p>
+<a href="/media/docs/4_MNA_spanish.pdf">Mini Nutritional Assessment</a>
+</p>
+
+<p>
+<a href="/media/docs/5_Oral_health_assessment_tool.pdf">Oral health assessment tool</a>
+</p>
+
+<p>
+<a href="/media/docs/6_Despistaje_disfagia.pdf">Despistaje de disfagia</a>
+</p>
+
+<p>
+<a href="/media/docs/8_Escala_GDS.pdf">Escala de depresión de Yesavage</a>
+</p>
+
+<p>
+<a href="/media/docs/10_prueba_visual.pdf">Prueba visual</a>
+</p>
+
+<!--
+<p>Su inscripción en el registro se ha realizado correctamente. Los miembros del equipo APTITUDE se pondrán en contacto con usted cuando haya alguna iniciativa acorde sus intereses seleccionados. Gracias por su interés y participación en el Proyecto APTITUDE. </p>
+-->
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

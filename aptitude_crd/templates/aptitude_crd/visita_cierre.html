@@ -1,0 +1,171 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Cerrar evaluación
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Cerrar evaluación</li>
+{% endblock breadcrumbs%}
+
+<!--
+Intervenciones propuestas (checkbox multiple):
+− ninguna
+− intervención social (consejo, Trabajador social o MAIA*)
+− intervención física (consejo, educación para la salud,soportes de información,profesor de actividad física,orientación con fisioterapeuta,orientación en consulta de fragilidad u hospital de día).
+− intervención cognitiva (consejo,estimulación cognitiva, consulta simple en geriatría, consulta en unidad de memoria).
+− intervención nutricional (consejo, educación para la salud, consulta nutricional, orientación con dietista,prescripción de suplementos nutricionales orales, consulta con médico nutricionista, consulta con dentista).
+− intervención psicológica (consejo, orientación con psicólogo o psiquiatra).
+− Otras intervenciones (consulta con médico especialista, consulta con paramédico especialista, propuesta de ayuda domiciliaria, propuesta de modificaciones terapéuticas, propuesta de exámenes complementarios,otros).
+¿Esta consulta ha permitido identificar problemas previamente no identificados?: sí/no/desconocido.
+En caso de respuesta afirmativa, ¿en qué dominios? Marcar todos los que sea posible: social, nutricional, físico, psicológico,sensorial, cognitivo, otro, desconocido.
+Dominios de fragilidad afectados identificados: ninguno/cognitivo/social/nutricional/ físico/psicológico/sensorial/otros
+¿El médico responsable ha informado al paciente del resultado de la evaluación?: sí/no/desconocido.
+En caso de seguimiento: ¿ha puesto en práctica las recomendaciones sugeridas en la visita anterior?: sí, no, desconocido.
+En caso de que sí: enteramente, parcialmente, desconocido.
+-->
+
+{% block content %}
+
+
+
+
+<div class="add-listing">
+
+{{form.errors}}
+
+{% for error in form.errors %}
+<div class="notification error closeable">
+        <p><span>Error! </span>{{error}}.</p>
+        <a class="close" href="#"></a>
+</div>
+{% endfor %}
+
+
+<form id="formulario_cierre" action="." method="POST" class="submit-form">
+        {% csrf_token %}
+
+
+
+    {% if dominios_afectados %}
+
+    <div class="add-listing-section margin-top-45">
+                    
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-doc"></i> Dominios afectados</h3>
+
+        </div>
+
+
+
+        <div class="checkboxes margin-bottom-20 ">
+
+        {% for dominio in dominios %}
+
+        <input id="{{dominio}}" type="checkbox" value="{{dominio}}" name="dominios" {% if dominio in form.dominios.value %} checked {% endif %}>
+        <label for="{{dominio}}">{{dominio}}</label>
+
+        {% endfor %}
+
+
+        </div>
+
+            
+    </div>
+
+    <div class="add-listing-section margin-top-45">
+                        
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-doc"></i> Intervenciones propuestas</h3>
+        </div>
+
+
+        <div class="margin-bottom-20 ">
+    
+
+            <div class="checkboxes margin-bottom-20 ">
+
+                {% for tipo in tipo_intervencion %}
+
+                <h2>{{ tipo.long }}</h2>
+
+
+                {% for intervencion in intervenciones %}
+
+                    {% if intervencion.tipo == tipo.short %}
+
+                    <div>
+
+                    <input id="check-{{ intervencion.id }}" type="checkbox" value="{{ intervencion.id }}" name="intervencion" {% if intervencion.id in form.intervencion.value %} checked {% endif %}>
+                    <label for="check-{{ intervencion.id }}">
+                        {{ intervencion.detalle }}
+                    </label>
+                    </div>
+                    {% endif %}
+
+
+                {% endfor %}
+                
+
+                {% endfor %}
+
+            </div>
+            
+        </div>
+
+            
+    </div>
+
+    {% else %}
+
+    <div class="add-listing-section margin-top-45 margin-bottom-45">
+                        
+            <!-- Headline -->
+            <div class="add-listing-headline">
+                <h3><i class="sl sl-icon-doc"></i> Seguimiento</h3>
+            </div>
+            <h3>
+            Todos los dominios se encuentran conservados, se debe realizar una nueva revaloración dentro de 4 meses
+            </h3>
+    </div>
+
+    {% endif %}
+
+
+    <div class="add-listing-section margin-top-45 margin-bottom-45">
+                        
+            <!-- Headline -->
+            <div class="add-listing-headline">
+                <h3><i class="sl sl-icon-doc"></i> Notas</h3>
+            </div>
+
+            {{form.notas}}
+            
+    </div>
+
+
+    <a href="{% url 'visita-eval' object.id %}" class="button border with-icon"><i class="sl  sl-icon-arrow-left-circle "></i> Volver a la evaluación </a>
+    <a href="#" onclick="document.getElementById('formulario_cierre').submit();" class="button preview">Terminar la evaluación</a>
+</form>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

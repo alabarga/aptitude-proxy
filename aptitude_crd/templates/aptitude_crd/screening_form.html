@@ -1,0 +1,199 @@
+{% load i18n %}
+
+<form id='icope_form' action="{{ screening_url }}" method="POST" class="submit-form">
+        {% csrf_token %}
+
+
+        <input type="hidden" name="visita" value="{{ object.visita.id }}" id="id_visita">
+        
+        <input type="hidden" name="cuestionario" value="14" id="id_cuestionario">
+
+        <div class="row  margin-bottom-45">
+                
+            <div class="col-md-12">
+        
+                <table class="basic-table">
+        
+                    <tr>
+                        <th>Condicion</th>
+                        <th>Test</th>
+                        <th>Evaluación</th>
+                        <!--
+                        <th>Dominio</th>
+                        <th>Cuestionarios</th>                
+                        -->
+                    </tr>
+        
+                    <tr>
+                        <td data-label="Column 1">DETERIORO COGNITIVO</td>
+                        <td data-label="Column 2"><p>1.- Memorice estas tres palabras: flor, puerta, arroz (por ejemplo)</p>
+                            <p>2.-  Orientación en tiempo y espacio, ¿qué día es hoy? ¿Dónde estoy (casa, hospital, etc)</p>
+                            <p>3.- ¿Recuerda las tres palabras</p>
+                        </td>
+                        <td data-label="Column 3">
+                            <div class="row with-forms">
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="COGNITIVO" type="checkbox" name="COGNITIVO">
+                                    <label for="COGNITIVO">Responde erroneamente o no sabe responder alguna de las tres preguntas</label>
+                                    
+                                </div>
+                            </div>
+                            <div class="row with-forms">
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="COGNITIVO-1" type="checkbox" name="COGNITIVO-1">
+                                    <label for="COGNITIVO-1">No puede recordar las tres palabras.</label>
+                                    
+                                </div>
+                            </div>                    
+                        </td>   
+                        <!--
+                        <td data-label="Column 4">COGNITIVO</td>
+                        <td data-label="Column 5">- Mini-Mental State Examination (MMSE)</td>
+                        -->
+                    </tr>
+        
+                    <tr>
+                        <td data-label="Column 1">LIMITACIÓN EN LA MOVILIDAD</td>
+                        <td data-label="Column 2">
+                            <p>Test de levantarse de la silla Levantarse de la silla 5 veces sin
+                            utilizar los brazos ¿Puede completarlo en 14 segundos?</p>
+                        </td>
+                        <td data-label="Column 3">
+                            <div class="row with-forms">
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="FUNCIONAL" type="checkbox" name="FUNCIONAL">
+                                    <label for="FUNCIONAL">No</label>
+                                    
+                                </div>
+                            </div>
+                        </td>   
+                        <!--
+                        <td data-label="Column 4">FUNCIONAL</td>
+                        <td data-label="Column 5">
+                            <p>- Índice de Barthel</p>
+                            <p>- Escala de Lawton y Brody</p>
+                            <p>- SPBB</p>
+                            <p>- Críterios de fragilidad de Fried</p>
+                        </td>
+                        -->
+                    </tr>
+        
+                    <tr>
+                        <td data-label="Column 1">DESNUTRICIÓN</td>
+                        <td data-label="Column 2">
+                            <p>1.- Perdida de peso: ¿Ha perdido involuntariamente más de 3 kilos
+                                    de peso en los últimos 3 meses?
+                                    </p>
+                            <p>2.- Perdida de apetito ¿Ha experimentado pérdida de apetito</p>                            
+                        </td>
+                        <td data-label="Column 3">
+                            <div class="row with-forms">
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="VITALIDAD" type="checkbox" name="VITALIDAD">
+                                    <label for="VITALIDAD">Sí</label>                                    
+                                </div>
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="VITALIDAD-1" type="checkbox" name="VITALIDAD-1">
+                                    <label for="VITALIDAD-1">Sí</label>                                    
+                                </div>                                
+                            </div>
+
+                        </td> 
+                        <!--
+                        <td data-label="Column 4">VITALIDAD</td>
+                        <td data-label="Column 5">
+                            <p>- Mini Nutritional Assessment</p>
+                            <p>- Salud bucal OHAT</p>
+                        </td>
+                        -->
+                    </tr>
+        
+                    <tr>
+                        <td data-label="Column 1">PERDIDA DE VISIÓN</td>
+                        <td data-label="Column 2">
+                            <p>Presenta algún problema de visión: dificultad para ver de lejos, dificutad para leer, enfermedad ocular o tratamiento médico (diabetes, tensión arterial elevada).</p>                            
+                        </td>
+                        <td data-label="Column 3">
+                            <div class="row with-forms">
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="VISION" type="checkbox" name="VISION">
+                                    <label for="VISION">Sí</label>
+                                    
+                                </div>
+                            </div>
+                        </td> 
+                        <!--
+                        <td data-label="Column 4">SENSORIAL (visión)</td>
+                        <td data-label="Column 5">
+                            <p>- Prueba visual del ICOPE</p>
+                        </td>
+                        -->
+                    </tr>
+        
+                    <tr>
+                        <td data-label="Column 1">PERDIDA AUDITIVA</td>
+                        <td data-label="Column 2">
+                            <p>Escucha cuando le hablan bajo (Test del susurro) o</p>
+                            <p>Prueba de audimetria igual o inferiior a 35 dB o</p>
+                            <p>Prueba diagnóstica a traves de la app del Test del ruido</p>                            
+                        </td>
+                        <td data-label="Column 3">
+                            <div class="row with-forms">
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="AUDICION" type="checkbox" name="AUDICION">
+                                    <label for="AUDICION">Fallo</label>
+                                    
+                                </div>
+                            </div>
+                        </td> 
+                        <!--                        
+                        <td data-label="Column 4">SENSORIAL (audición)</td>
+                        <td data-label="Column 5">
+                            <p>- Test audiometria app del sonido de la ICOPE</p>
+                        </td>
+                        -->
+                    </tr>
+        
+                    <tr>
+                        <td data-label="Column 1">SINTOMAS DEPRESIVOS</td>
+                        <td data-label="Column 2"> 
+                            <p>En las dos últimas semanas usted se ha sentido:</p>
+                            <p>- deprimido, depresivo o desesperanzado</p>
+                            <p>- con poco interes y/o placer por hacer cosas</p>                            
+                        </td>
+                        <td data-label="Column 3">
+                            <div class="row with-forms">
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="PSICOLOGICO" type="checkbox" name="PSICOLOGICO">
+                                    <label for="PSICOLOGICO">Sí</label>
+                                </div>
+                                <div class="col-md-12 checkboxes in-row">
+                                    <input id="PSICOLOGICO-1" type="checkbox" name="PSICOLOGICO-1">
+                                    <label for="PSICOLOGICO-1">Sí</label>
+                                </div>                                
+                            </div>
+                        </td> 
+
+                        <!--
+                        
+                        <td data-label="Column 4">PSICOLÓGICO</td>
+                        <td data-label="Column 5">
+                            <p>- Escala de depresión de Yesavage</p>
+                        </td>
+                        -->
+                    </tr>
+                </table>
+              
+            </div>
+
+        </div>   
+         <div class="row margin-bottom-45">
+            <div class="checkboxes in-row ">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="todo_ok" type="checkbox" name="todo_ok"> 
+                <label for="todo_ok"> No se encontró ningún déficit durante el cribado, todos los dominios se encuentran conservados</label>              
+            </div>
+    
+        </div>  
+        <input type="submit" name="update_button" value="{% trans 'Guardar' noop %}" />      
+</form>

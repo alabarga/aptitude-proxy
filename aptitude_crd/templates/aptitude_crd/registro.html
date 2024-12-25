@@ -1,0 +1,431 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Registro España-Francia-Andorra (EFA)
+{% endblock title %}
+{% block breadcrumbs %}
+<li>Registro</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+
+<p class="margin-bottom-45">
+El registro EFA tiene como objetivo ser el nexo de unión entre grupos de investigación y/o entidades, que desarrollen su actividad en el marco de la geriatría y gerontología, y las personas mayores interesadas en formar parte en proyectos que realicen dichas entidades.
+</p>
+<!--
+<tr><th><label for="id_name">Name:</label></th><td><input id="id_name" maxlength="255" name="name" type="text" /></td></tr>
+<tr><th><label for="id_shortname">Shortname:</label></th><td><input id="id_shortname" maxlength="255" name="shortname" type="text" /></td></tr>
+<tr><th><label for="id_address">Address:</label></th><td><input id="id_address" maxlength="255" name="address" type="text" /></td></tr>
+<tr><th><label for="id_city">City:</label></th><td><input id="id_city" maxlength="255" name="city" type="text" /></td></tr>
+<tr><th><label for="id_country">Country:</label></th><td><select id="id_country" name="country">
+<option value="">---------</option>
+<option value="ES" selected="selected">Spain</option>
+<option value="FR">France</option>
+<option value="PT">Portugal</option>
+</select></td></tr>
+<tr><th><label for="id_tipo">Tipo:</label></th><td><select id="id_tipo" name="tipo">
+<option value="" selected="selected">---------</option>
+<option value="core">Core facility</option>
+<option value="biobank">Biobank</option>
+<option value="research">Research center</option>
+<option value="data">Data repository</option>
+<option value="boinfo">Bioinformatics</option>
+<option value="na">Not defined</option>
+</select></td></tr>
+<tr><th><label for="id_description">Description:</label></th><td><textarea cols="40" id="id_description" name="description" rows="10">
+</textarea></td></tr>
+<tr><th><label for="id_location">Location:</label></th><td>
+<style type="text/css">
+    #id_location_map { width: 600px; height: 400px; }
+    #id_location_map .aligned label { float: inherit; }
+    #id_location_div_map { position: relative; vertical-align: top; float: left; }
+    #id_location { display: none; }
+    .olControlEditingToolbar .olControlModifyFeatureItemActive {
+        background-image: url("/static/admin/img/gis/move_vertex_on.svg");
+        background-repeat: no-repeat;
+    }
+    .olControlEditingToolbar .olControlModifyFeatureItemInactive {
+        background-image: url("/static/admin/img/gis/move_vertex_off.svg");
+        background-repeat: no-repeat;
+    }
+</style>
+
+<div id="id_location_div_map">
+    <div id="id_location_map"></div>
+    <span class="clear_features"><a href="javascript:geodjango_location.clearFeatures()">Delete all Features</a></span>
+    
+    <textarea id="id_location" class="vSerializedField required" cols="150" rows="10" name="location"></textarea>
+    <script type="text/javascript">
+        var map_options = {};
+        var options = {
+            geom_name: 'Point',
+            id: 'id_location',
+            map_id: 'id_location_map',
+            map_options: map_options,
+            map_srid: 4326,
+            name: 'location'
+        };
+        
+        var geodjango_location = new MapWidget(options);
+    </script>
+</div>
+</td></tr>
+<tr><th><label for="id_url">Url:</label></th><td><input id="id_url" maxlength="200" name="url" type="url" /></td></tr>
+<tr><th><label for="id_email">Email:</label></th><td><input id="id_email" maxlength="255" name="email" type="text" /></td></tr>
+<tr><th><label for="id_phone">Phone:</label></th><td><input id="id_phone" maxlength="255" name="phone" type="text" /></td></tr>
+<tr><th><label for="id_linked_url">Linked url:</label></th><td><input id="id_linked_url" maxlength="200" name="linked_url" type="url" /></td></tr>
+<tr><th><label for="id_twitter_url">Twitter url:</label></th><td><input id="id_twitter_url" maxlength="200" name="twitter_url" type="url" /></td></tr>
+<tr><th><label for="id_facebook_url">Facebook url:</label></th><td><input id="id_facebook_url" maxlength="200" name="facebook_url" type="url" /></td></tr>
+<tr><th><label for="id_contact_person">Contact person:</label></th><td><input id="id_contact_person" maxlength="255" name="contact_person" type="text" /></td></tr>
+<tr><th><label for="id_contact_email">Contact email:</label></th><td><input id="id_contact_email" maxlength="255" name="contact_email" type="text" /></td></tr>
+<tr><th><label for="id_tags">Tags:</label></th><td><input autocomplete="off" data-tag-list="[&quot;biobank&quot;, &quot;cancer&quot;, &quot;mouse&quot;]" data-tag-options="{&quot;required&quot;: true}" data-tagulous="true" id="id_tags" name="tags" type="text" /><br /><span class="helptext">Enter a comma-separated tag string</span></td></tr>
+<tr><th><label for="id_categories">Categories:</label></th><td><select multiple="multiple" id="id_categories" name="categories">
+</select></td></tr>
+<tr><th><label for="id_imported">Imported:</label></th><td><input id="id_imported" name="imported" type="checkbox" /></td></tr>
+<tr><th><label for="id_imported_from">Imported from:</label></th><td><input id="id_imported_from" maxlength="255" name="imported_from" type="text" /></td></tr>
+<tr><th><label for="id_import_reference">Import reference:</label></th><td><input id="id_import_reference" maxlength="255" name="import_reference" type="text" /></td></tr>
+<tr><th><label for="id_dropimages_gallery">Dropimages gallery:</label></th><td><select id="id_dropimages_gallery" name="dropimages_gallery">
+<option value="" selected="selected">---------</option>
+<option value="1">DropimagesGallery object</option>
+<option value="2">DropimagesGallery object</option>
+<option value="3">DropimagesGallery object</option>
+<option value="4">DropimagesGallery object</option>
+</select></td></tr>
+-->
+
+            <div id="add-listing">
+
+
+                <form id="resource_form" method="post" class="with-forms" action=".">
+
+                 {% csrf_token %}    
+
+
+                {% for field in form %}
+
+                {% for error in field.errors %}
+
+                <div class="notification error closeable">
+                        <p><span>{{ field.label }}: {{error}}</span></p>
+                        <a class="close" href="#"></a>
+                </div>
+                {% endfor %}
+          
+                {% endfor %}
+
+                 <!-- Section -->
+                 <div class="add-listing-section">
+
+                    <!-- Headline -->
+                    <div class="add-listing-headline">
+                        <h3><i class="sl sl-icon-user"></i> Datos personales</h3>
+                    </div>
+
+                    <!-- Title -->
+
+                    <div class="row with-forms">
+                        <div class="col-md-4">
+                            <h5>DNI</h5>
+                            <input class="search-field" id="id_dni" name="dni" type="text" value="{{ form.dni.value| default_if_none:"" }}"/>
+                        </div>                          
+                    </div>
+                    
+                    <div class="row with-forms">
+                        <div class="col-md-4">
+                            <h5>Nombre</h5>
+                            <input class="search-field" id="id_nombre" name="nombre" type="text" value="{{ form.nombre.value| default_if_none:"" }}"/>
+                        </div>
+                        <div class="col-md-8">
+                            <h5>Apellidos</h5>
+                            <input class="search-field" id="id_apellidos" name="apellidos" type="text" value="{{ form.apellidos.value| default_if_none:"" }}"/>
+                        </div>                            
+                    </div>
+
+                </div>
+
+
+                <!-- Section -->
+                <div class="add-listing-section margin-top-45">
+
+                    <!-- Headline -->
+                    <div class="add-listing-headline">
+                        <h3><i class="sl sl-icon-location"></i> Dirección</h3>
+                    </div>
+
+                    <div class="submit-section">
+
+                        <!-- Row -->
+                        <div class="row with-forms">
+                            <!-- Address -->
+                            <div class="col-md-6">
+                                <h5>Dirección</h5>
+                                <input type="text" id="id_direccion" name="direccion" value="{{ form.direccion.value| default_if_none:"" }}">
+                            </div>
+                            <!-- City -->
+                                                            
+                            <div class="col-md-4">
+                                <h5>Ciudad</h5>
+                                <input type="text" id="id_ciudad" name="ciudad">
+                            </div>
+                            <!-- Country -->
+                            <div class="col-md-2">
+                                <h5>País {{form.pais.value}}</h5>
+                                <select class="chosen-select-no-single" id="id_pais" name="pais"> 
+                                    <option value="ES" {% if form.pais.value == 'ES' %} selected {% endif %}>España</option>                                    
+                                    <option value="FR" {% if form.pais.value == 'FR' %} selected {% endif %}>Francia</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row with-forms">
+
+                            <div class="col-md-4">
+                                <h5>Telefono</h5>
+                                <input type="text" id="id_telefono" name="telefono" value="{{ form.telefono.value| default_if_none:"" }}">
+                            </div>
+                            <div class="col-md-8">
+                                <h5>E-mail</h5>
+                                <input type="text" id="id_email" name="email" value="{{ form.email.value| default_if_none:"" }}">
+                            </div>
+                        </div>
+
+                        <!-- Row / End -->
+
+                    </div>
+                </div>
+                <!-- Section / End -->
+
+
+                    <!-- Section -->
+                    <div class="add-listing-section margin-top-45">
+                        
+                        <!-- Headline -->
+                        <div class="add-listing-headline">
+                            <h3><i class="sl sl-icon-doc"></i> Información básica</h3>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="row with-forms">
+                            <div class="col-md-6">
+                                <h5>Sexo</h5>
+                                <select class="chosen-select-no-single" id="id_sexo" name="sexo">
+                                    <option value="1" {% if form.sexo.value == "1" %} selected {% endif %}>Hombre</option>
+                                    <option value="2" {% if form.sexo.value == "2" %} selected {% endif %}>Mujer</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Fecha de nacimiento</h5>
+                                <input class="search-field" id="id_fecha_nacimiento" name="fecha_nacimiento" placeholder="dd/mm/aaaa" type="text" value="{{ form.fecha_nacimiento.value| default_if_none:"" }}"/>
+                            </div>                            
+                        </div>
+
+                        
+                    </div>
+                    <!-- Section / End -->
+
+
+                    <div class="add-listing-section margin-top-45">
+                        
+                        <!-- Headline -->
+                        <div class="add-listing-headline">
+                            <h3><i class="sl sl-icon-doc"></i> Temas de interés</h3>
+                        </div>
+
+                        {% for error in form.temas.errors %}
+                        <div class="notification error closeable">
+                                <p><span>Error!</span>{{error}}.</p>
+                                <a class="close" href="#"></a>
+                        </div>
+                        {% endfor %}
+    
+                        <div class="checkboxes in-row margin-bottom-20 ">
+                    
+                            {% for tema in temas %}
+                            {% with val=forloop.counter|stringformat:"s" %}
+                            <input id="check-{{ forloop.counter }}" type="checkbox" value="{{ forloop.counter }}" name="temas" {% if val in form.temas.value %} checked {% endif %}>
+                            <label for="check-{{ forloop.counter }}">
+                                    {% blocktrans %} {{ tema }} {% endblocktrans %}
+                            </label>
+                            {% endwith %}
+                            {% endfor %}
+                            <!--
+                            <input id="check-1" type="checkbox" value="1" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-1">{% trans "Deterioro cognitivo" noop %}</label>
+
+                            <input id="check-2" type="checkbox" value="2" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-2">{% trans "Fragilidad" noop %}</label>
+
+                            <input id="check-3" type="checkbox" value="3" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-3">{% trans "Cancer" noop %}</label>
+
+                            <input id="check-4" type="checkbox" value="4" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-4">{% trans "Incontinencia de orina y/o heces" noop %}</label>
+
+                            <input id="check-5" type="checkbox" value="5" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-5">{% trans "Caídas" noop %}</label>
+
+                            <input id="check-6" type="checkbox" value="6" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-6">{% trans "Diabetes" noop %}</label>
+
+                            <input id="check-7" type="checkbox" value="7" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-7">{% trans "Úlceras por presión" noop %}</label>
+
+                            <input id="check-8" type="checkbox" value="8" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-8">{% trans "Problemas cardiovasculares" noop %}</label>
+
+                            <input id="check-9" type="checkbox" value="9" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-9">{% trans "Problemas respiratorios" noop %}</label>
+
+                            <input id="check-10" type="checkbox" value="10" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-10">{% trans "Problemas renales" noop %}</label>
+
+                            <input id="check-11" type="checkbox" value="11" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-11">{% trans "Problemas digestivos" noop %}</label>
+
+                            <input id="check-12" type="checkbox" value="12" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-12">{% trans "Problemas endocrinos" noop %}</label>
+                    
+                            <input id="check-13" type="checkbox" value="13" name="temas" {% if '1' in  form.temas.value %} checked {% endif %}>
+                            <label for="check-13">{% trans "Problemas alimentarios y dentales" noop %}</label>
+
+                            <input id="check-14" type="checkbox" value="14" name="temas">
+                            <label for="check-14">{% trans "Problemas reumatológicos" noop %}</label>
+
+                            <input id="check-15" type="checkbox" value="15" name="temas">
+                            <label for="check-15">{% trans "Problemas hematológicos" noop %}</label>
+
+                            <input id="check-16" type="checkbox" value="16" name="temas">
+                            <label for="check-16">{% trans "Problemas psiquiátricos" noop %}</label>
+
+                            <input id="check-17" type="checkbox" value="17" name="temas">
+                            <label for="check-17">{% trans "Problemas de movilidad" noop %}</label>
+
+                            <input id="check-18" type="checkbox" value="18" name="temas">
+                            <label for="check-18">{% trans "Problemas neurológicos" noop %}</label>
+
+                            <input id="check-19" type="checkbox" value="19" name="temas">
+                            <label for="check-19">{% trans "Déficits sensoriales" noop %}</label>
+
+                            <input id="check-20" type="checkbox" value="20" name="temas">
+                            <label for="check-20">{% trans "Polifarmacia" noop %}</label>
+
+                            <input id="check-21" type="checkbox" value="21" name="temas">
+                            <label for="check-21">{% trans "Estilos de vida saludables" noop %}</label>
+
+                            <input id="check-22" type="checkbox" value="22" name="temas">
+                            <label for="check-22">{% trans "Otros temas" noop %}</label>
+
+                            -->
+                        </div>
+
+                            
+                    </div>
+
+                    <!-- Section -->
+                    <div class="add-listing-section margin-top-45">
+    
+                        <!-- Headline -->
+                        <div class="add-listing-headline">
+                            <h3><i class="sl sl-icon-doc"></i>Consentimiento informado</h3>
+                        </div>
+
+                        {% for error in form.check.errors %}
+
+                        <div class="notification error closeable">
+                                <p><span>Error! {{error}}.</span></p>
+                                <a class="close" href="#"></a>
+                        </div>
+
+                        {% endfor %}
+
+                        <!-- Title -->
+                        <div class="row with-forms">
+                            <div class="col-md-12 checkboxes in-row">
+                                <input id="id_check" type="checkbox" name="check">
+                                <label for="id_check">{% trans "He leído y acepto la política de proteccón de datos" noop %}</label>
+                                <a href="/proteccion-datos/"> (+leer)</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                </div>
+
+                <a href="#" onclick="document.getElementById('resource_form').submit();" class="button preview">Enviar <i class="fa fa-arrow-circle-right"></i></a>
+
+                <div class="add-listing-section margin-top-45">
+                        
+                    <!-- Headline -->
+                    <div class="add-listing-headline">
+                        <h3><i class="sl sl-icon-doc"></i>INFORMACIÓN BÁSICA SOBRE PROTECCIÓN DE DATOS</h3>
+                    </div>
+
+                    <div>
+
+                        <table class="basic-table">
+
+                            <tbody>
+                                <tr>
+                                    <td data-label="Column 1">Responsable</td>
+                                    <td data-label="Column 2">FUNDACION MIGUEL SERVET-NAVARRABIOMED</td>
+                                </tr>
+                
+                                <tr>
+                                    <td data-label="Column 1">Finalidad</td>
+                                    <td data-label="Column 2">Creación y mantenimiento de una base de datos sociodemográficos y de contacto de personas mayores de 65 años que estén interesadas en participar en futuros proyectos de investigación relacionadas con las áreas de interés propuestas.</td>
+                                </tr>
+                
+                                <tr>
+                                    <td data-label="Column 1">Derechos</td>
+                                    <td data-label="Column 2">Tienes derecho a acceder, rectificar y suprimir los datos, así como otros derechos, como se explica en la información adicional.</td>
+                                </tr>
+                
+                                <tr>
+                                    <td data-label="Column 1">Información adicional</td>
+                                    <td data-label="Column 2">Puedes consultar la información adicional y detallada sobre <a href="/proteccion-datos">Protección de Datos aquí</a></td>
+                                </tr>
+                            </tbody>
+                    </table>
+                    </div>
+                </div>
+                
+                
+
+
+
+
+
+
+
+
+
+                <!-- Section / End -->
+
+
+    <!-- Content / End -->
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

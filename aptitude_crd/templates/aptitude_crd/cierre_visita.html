@@ -1,0 +1,36 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Cerrar evaluación
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Cerrar evaluación</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+<form action="." method="POST" class="submit-form">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-primary">{% trans 'Guardar' noop %}</button>
+</form>
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

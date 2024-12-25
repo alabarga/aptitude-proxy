@@ -1,0 +1,41 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Descargas
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Descargas</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+<p>
+<!--a href="/descargas/registro" class="button medium border"><i class="sl sl-icon-docs"></i> Descargar registro EFA</a-->
+<a href="/descargas/db" class="button medium border"><i class="sl sl-icon-docs"></i> Descargar base de datos </a>
+</p>
+
+<p>
+    <!--a href="/descargas/registro" class="button medium border"><i class="sl sl-icon-docs"></i> Descargar registro EFA</a-->
+    <a href="/descargas/proxy" class="button medium border"><i class="sl sl-icon-docs"></i> Descargar PROXY-VF </a>
+</p>
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

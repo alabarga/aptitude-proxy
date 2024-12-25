@@ -1,0 +1,150 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% load cuestionarios %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+{% block title %}
+{{evaluacion.cuestionario.nombre}}
+{% endblock title%}
+{% block breadcrumbs %}
+
+{% endblock breadcrumbs%}
+
+{% block content %}
+
+    <div>
+
+    <!--
+    <h4>
+    {{ evaluacion.cuestionario.descripcion |safe }}
+    </h4>
+    -->
+
+    {% if evaluacion.cuestionario.guia %}
+        <p>
+            <a href="/media/{{ evaluacion.cuestionario.guia }}">
+              <i class="sl sl-icon-docs"></i> Descargar instrucciones</a>
+        </p>
+    {% endif %}
+
+    {% if evaluacion.cuestionario.id == 11 %}
+        <img src="/media/SPPB_help.png">
+    {% endif%}
+    </div>
+
+
+
+    <form id="resource_form" method="post" class="with-forms" action=".">
+
+        {% csrf_token %}
+        {{ form.errors }}
+
+        {% for field in form.hidden_fields %}
+        {{field}}
+        {% endfor %}
+
+        <!-- Section -->
+        <div class="add-listing-section margin-top-45" >
+
+            <table class="basic-table">
+        
+                <tr>
+                    <th>Condicion</th>
+                    <th>Test</th>
+                    <th>Evaluación</th>
+                    <!--
+                    <th>Dominio</th>
+                    <th>Cuestionarios</th>                
+                    -->
+                </tr>
+    
+                {% for nombre_bloque in form.visible_fields|bloques %}
+                
+                    {% for field in form.visible_fields|bloque:nombre_bloque %}
+                    
+                    {% if field.field.alert %}
+                    <tr class="special-row">
+                    {% elif field.field.navarra %}
+                    <tr class="navarra-row">
+                    {% else %}
+                    <tr class="question-row">
+                    {% endif %}
+                    {% if forloop.first %}
+                        <td data-label="Column 1">
+                            <h4>{{ nombre_bloque|default_if_none:"" }}</h4>
+                        </td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    <td data-label="Column 2">
+                        
+                        <p>{{ field.label |safe }}</p>
+                        {% if field.label != field.help_text %}
+                        <p> {{ field.help_text }}</p>
+                        {% endif %}
+                       
+                    </td>
+                    <td data-label="Column 3">
+                    {% if field.field.tipo == 'CHECK' %}
+                        {% for c in field.field.opciones %}
+                        <div class="row with-forms">
+                            <div class="col-md-12 checkboxes in-row">
+                                <input id="{{ field.auto_id}}_{{ forloop.counter0 }}" type="checkbox" name="{{ field.name }}"  
+                                {% if c.0 in field.value.0 %} checked value="SI"
+                                {% else %} value="NO" 
+                                {% endif %}
+                                
+                                >
+                                <label for="{{ field.auto_id}}_{{ forloop.counter0 }}">{{ c.1 }}</label><br/>
+                            </div>
+                        </div>                        
+                        {% endfor %}
+                        
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                    </td>   
+
+                    </tr>
+                    {% endfor %}
+
+                
+                {% endfor %}
+            </table>
+        <br/>
+        <input type="submit" name="update_button" value="{% trans 'Guardar' noop %}"  style="display: block; margin-left: auto; margin-right: 0;"/>
+
+        </div>
+    </form>
+
+
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+          $('.like-radio').click(function(){
+                Checkbox_to_RadioButton(this);
+          });
+    });
+    function Checkbox_to_RadioButton(box){
+          $('input:checkbox[name=' + box.name + ']').each(function(){
+                if (this != box) $(this).attr('checked', false);
+          });
+    }
+    </script>
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

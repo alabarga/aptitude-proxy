@@ -1,0 +1,426 @@
+{% extends 'oncomap/base.html' %}
+{% load drop_images %}
+
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+{% block content %}
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2>Add resource</h2>
+
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li>Add resource</li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+
+<!--
+<tr><th><label for="id_name">Name:</label></th><td><input id="id_name" maxlength="255" name="name" type="text" /></td></tr>
+<tr><th><label for="id_shortname">Shortname:</label></th><td><input id="id_shortname" maxlength="255" name="shortname" type="text" /></td></tr>
+<tr><th><label for="id_address">Address:</label></th><td><input id="id_address" maxlength="255" name="address" type="text" /></td></tr>
+<tr><th><label for="id_city">City:</label></th><td><input id="id_city" maxlength="255" name="city" type="text" /></td></tr>
+<tr><th><label for="id_country">Country:</label></th><td><select id="id_country" name="country">
+<option value="">---------</option>
+<option value="ES" selected="selected">Spain</option>
+<option value="FR">France</option>
+<option value="PT">Portugal</option>
+</select></td></tr>
+<tr><th><label for="id_tipo">Tipo:</label></th><td><select id="id_tipo" name="tipo">
+<option value="" selected="selected">---------</option>
+<option value="core">Core facility</option>
+<option value="biobank">Biobank</option>
+<option value="research">Research center</option>
+<option value="data">Data repository</option>
+<option value="boinfo">Bioinformatics</option>
+<option value="na">Not defined</option>
+</select></td></tr>
+<tr><th><label for="id_description">Description:</label></th><td><textarea cols="40" id="id_description" name="description" rows="10">
+</textarea></td></tr>
+<tr><th><label for="id_location">Location:</label></th><td>
+<style type="text/css">
+    #id_location_map { width: 600px; height: 400px; }
+    #id_location_map .aligned label { float: inherit; }
+    #id_location_div_map { position: relative; vertical-align: top; float: left; }
+    #id_location { display: none; }
+    .olControlEditingToolbar .olControlModifyFeatureItemActive {
+        background-image: url("/static/admin/img/gis/move_vertex_on.svg");
+        background-repeat: no-repeat;
+    }
+    .olControlEditingToolbar .olControlModifyFeatureItemInactive {
+        background-image: url("/static/admin/img/gis/move_vertex_off.svg");
+        background-repeat: no-repeat;
+    }
+</style>
+
+<div id="id_location_div_map">
+    <div id="id_location_map"></div>
+    <span class="clear_features"><a href="javascript:geodjango_location.clearFeatures()">Delete all Features</a></span>
+    
+    <textarea id="id_location" class="vSerializedField required" cols="150" rows="10" name="location"></textarea>
+    <script type="text/javascript">
+        var map_options = {};
+        var options = {
+            geom_name: 'Point',
+            id: 'id_location',
+            map_id: 'id_location_map',
+            map_options: map_options,
+            map_srid: 4326,
+            name: 'location'
+        };
+        
+        var geodjango_location = new MapWidget(options);
+    </script>
+</div>
+</td></tr>
+<tr><th><label for="id_url">Url:</label></th><td><input id="id_url" maxlength="200" name="url" type="url" /></td></tr>
+<tr><th><label for="id_email">Email:</label></th><td><input id="id_email" maxlength="255" name="email" type="text" /></td></tr>
+<tr><th><label for="id_phone">Phone:</label></th><td><input id="id_phone" maxlength="255" name="phone" type="text" /></td></tr>
+<tr><th><label for="id_linked_url">Linked url:</label></th><td><input id="id_linked_url" maxlength="200" name="linked_url" type="url" /></td></tr>
+<tr><th><label for="id_twitter_url">Twitter url:</label></th><td><input id="id_twitter_url" maxlength="200" name="twitter_url" type="url" /></td></tr>
+<tr><th><label for="id_facebook_url">Facebook url:</label></th><td><input id="id_facebook_url" maxlength="200" name="facebook_url" type="url" /></td></tr>
+<tr><th><label for="id_contact_person">Contact person:</label></th><td><input id="id_contact_person" maxlength="255" name="contact_person" type="text" /></td></tr>
+<tr><th><label for="id_contact_email">Contact email:</label></th><td><input id="id_contact_email" maxlength="255" name="contact_email" type="text" /></td></tr>
+<tr><th><label for="id_tags">Tags:</label></th><td><input autocomplete="off" data-tag-list="[&quot;biobank&quot;, &quot;cancer&quot;, &quot;mouse&quot;]" data-tag-options="{&quot;required&quot;: true}" data-tagulous="true" id="id_tags" name="tags" type="text" /><br /><span class="helptext">Enter a comma-separated tag string</span></td></tr>
+<tr><th><label for="id_categories">Categories:</label></th><td><select multiple="multiple" id="id_categories" name="categories">
+</select></td></tr>
+<tr><th><label for="id_imported">Imported:</label></th><td><input id="id_imported" name="imported" type="checkbox" /></td></tr>
+<tr><th><label for="id_imported_from">Imported from:</label></th><td><input id="id_imported_from" maxlength="255" name="imported_from" type="text" /></td></tr>
+<tr><th><label for="id_import_reference">Import reference:</label></th><td><input id="id_import_reference" maxlength="255" name="import_reference" type="text" /></td></tr>
+<tr><th><label for="id_dropimages_gallery">Dropimages gallery:</label></th><td><select id="id_dropimages_gallery" name="dropimages_gallery">
+<option value="" selected="selected">---------</option>
+<option value="1">DropimagesGallery object</option>
+<option value="2">DropimagesGallery object</option>
+<option value="3">DropimagesGallery object</option>
+<option value="4">DropimagesGallery object</option>
+</select></td></tr>
+-->
+
+                <div id="add-listing">
+
+
+                <form id="resource_form" method="post" class="with-forms" action=".">
+
+                 {% csrf_token %}    
+                 {{ form.errors }}
+
+
+                    <!-- Section -->
+                    <div class="add-listing-section">
+                        
+                        <!-- Headline -->
+                        <div class="add-listing-headline">
+                            <h3><i class="sl sl-icon-doc"></i> Basic Information</h3>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="row with-forms">
+                            <div class="col-md-8">
+                                <h5>Resource name</h5>
+                                <input class="search-field" id="id_name" name="name" type="text" value=""/>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>Resource acronym</h5>
+                                <input class="search-field" id="id_shortname" name="shortname" type="text" value=""/>
+                            </div>                            
+                        </div>
+
+                        <!-- Row -->
+                        <div class="row with-forms">
+
+                            <!-- Status -->
+                            <div class="col-md-6">
+                                <h5>Category</h5>
+                                <select name="tipo" id="id_tipo" class="chosen-select-no-single" >
+                                    <option label="blank">Select Category</option>  
+                                    <option value="biobank">Biobank</option>
+                                    <option value="platform">Diagnostics platform</option>
+                                    <option value="core">Core facility</option>
+                                    <option value="bioinfo">Bioinformatics</option>                                    
+                                    <option value="data">Data resource</option>                                    
+                                </select>
+                            </div>
+
+                            <!-- Type -->
+                            <div class="col-md-6">
+                                <h5>Keywords <i class="tip" data-tip-content="Maximum of 15 keywords related with your business"></i></h5>
+                                {{form.tags}}
+                                <!--input type="text" id="id_tags" name="tags" placeholder="Keywords should be separated by 
+                                commas"-->
+                            </div>
+
+                        </div>
+                        <!-- Row / End -->
+
+                    </div>
+                    <!-- Section / End -->
+
+                    <!-- Section -->
+                    <div class="add-listing-section margin-top-45">
+
+                        <!-- Headline -->
+                        <div class="add-listing-headline">
+                            <h3><i class="sl sl-icon-location"></i> Location</h3>
+                        </div>
+
+                        <div class="submit-section">
+
+                            <!-- Row -->
+                            <div class="row with-forms">
+                                <!-- Address -->
+                                <div class="col-md-6">
+                                    <h5>Address</h5>
+                                    <input type="text" id="id_address" name="address" placeholder="e.g. 964 School Street">
+                                </div>
+                                <!-- City -->
+                                                                
+                                <div class="col-md-4">
+                                    <h5>City</h5>
+                                    <input type="text" id="id_city" name="city">
+                                </div>
+                                <!-- Country -->
+                                <div class="col-md-2">
+                                    <h5>Country</h5>
+                                    <select class="chosen-select-no-single" id="id_country" name="country">
+                                        <option value="" label="blank">Select Country</option>  
+                                        <option value="FR">France</option>
+                                        <option value="PT">Portugal</option>
+                                        <option value="ES">Spain</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="row with-forms">
+                                <div class="col-md-12">
+                                    {{form.location}}
+                                </div>
+                            </div>
+                            <!-- Row / End -->
+
+                        </div>
+                    </div>
+                    <!-- Section / End -->
+
+
+                    
+
+                    <!-- Section -->
+                    <div class="add-listing-section margin-top-45">
+
+                        <!-- Headline -->
+                        <div class="add-listing-headline">
+                            <h3><i class="sl sl-icon-docs"></i> Details</h3>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form">
+                            <h5>Description</h5>
+                            <textarea class="WYSIWYG" name="summary" cols="40" rows="3" id="id_description" name="description"  spellcheck="true"></textarea>
+                        </div>
+
+                        <!-- Row -->
+                        <div class="row with-forms">
+
+                            <!-- Website -->
+                            <div class="col-md-4">
+                                <h5>Website</h5>
+                                <input type="text" id="id_url" name="url">
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="col-md-4">
+                                <h5>Phone</h5>
+                                <input type="text" id="id_phone" name="phone" >
+                            </div>
+
+                            <!-- Email Address -->
+                            <div class="col-md-4">
+                                <h5>E-mail</h5>
+                                <input type="text" id="id_email" name="email" >
+                            </div>
+
+                        </div>
+                        <!-- Row / End -->
+
+                        <!-- Row -->
+                        <div class="row with-forms">
+
+                         <!-- Email Address -->
+                            <div class="col-md-4">
+                                <h5 class="linkedin-input"><i class="fa fa-linkedin"></i> Linkedin <span>(optional)</span></h5>
+                                <input type="text" id="id_linkedin_url" name="linkedin_url" placeholder="https://linkedin.com">
+                            </div>                            
+
+                            <!-- Website -->
+                            <div class="col-md-4">
+                                <h5 class="twitter-input"><i class="fa fa-twitter"></i> Twitter <span>(optional)</span></h5>
+                                <input type="text" id="id_twitter_url" name="twitter_url" placeholder="https://www.twitter.com/">
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="col-md-4">
+                                <h5 class="fb-input"><i class="fa fa-facebook-square"></i> Facebook <span>(optional)</span></h5>
+                                <input type="text" id="id_facebook_url" name="facebook_url" placeholder="https://www.facebook.com/">
+                            </div>   
+
+                        </div>
+                        <!-- Row / End -->
+
+
+                        <!-- Checkboxes 
+                        <h5 class="margin-top-30 margin-bottom-10">Technologies <span>(optional)</span></h5>
+                        <div class="checkboxes in-row margin-bottom-20">
+                    
+                            <input id="check-a" type="checkbox" name="check">
+                            <label for="check-a">Sequencing</label>
+
+                            <input id="check-b" type="checkbox" name="check">
+                            <label for="check-b">Proteomics</label>
+
+                            <input id="check-c" type="checkbox" name="check">
+                            <label for="check-c">Mass spectrometry</label>
+
+                            <input id="check-d" type="checkbox" name="check">
+                            <label for="check-d">Bioinformatics</label>
+
+                            <input id="check-e" type="checkbox" name="check" >
+                            <label for="check-e">HPC cluster</label>
+                    
+                        </div>
+                        -->
+                        <!-- Checkboxes / End -->
+
+                    </div>
+                    <!-- Section / End -->
+
+                    <!-- Section -->
+                    <div class="add-listing-section">
+
+                        <!-- Headline -->
+                        <div class="add-listing-headline">
+                            <h3><i class="sl sl-icon-user"></i> Contact person</h3>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="row with-forms">
+                            <div class="col-md-8">
+                                <h5>Name</h5>
+                                <input class="search-field" id="id_contact_person" name="contact_person" type="text"/>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>E-mail</h5>
+                                <input class="search-field" id="id_contact_email" name="contact_email" type="text"/>
+                            </div>                            
+                        </div>
+
+                    </div>
+                    <!-- Section / End -->
+                   
+                    <!-- Section 
+                    <div class="add-listing-section margin-top-45">
+                        
+                        
+                        <div class="add-listing-headline">
+                            <h3><i class="sl sl-icon-book-open"></i> Services</h3>
+                           
+                            <label class="switch"><input type="checkbox"><span class="slider round"></span></label>
+                        </div>
+
+                        
+                        <div class="switcher-content">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="pricing-list-container">
+                                        <tr class="pricing-list-item pattern">
+                                            <td>
+                                                <div class="fm-move"><i class="sl sl-icon-cursor-move"></i></div>
+                                                <div class="fm-input pricing-name"><input type="text" placeholder="Title" /></div>
+                                                <div class="fm-input pricing-ingredients"><input type="text" placeholder="Description" /></div>
+                                                <div class="fm-input pricing-price"><input type="text" placeholder="Price" data-unit="EUR" /></div>
+                                                <div class="fm-close"><a class="delete" href="#"><i class="fa fa-remove"></i></a></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <a href="#" class="button add-pricing-list-item">Add Item</a>
+                                    <a href="#" class="button add-pricing-submenu">Add Category</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+
+                    </div>
+                    -->
+                    {{ form.dropimages_gallery }}  
+                </form>
+
+                </div>
+
+                <!-- Section -->
+                <div class="add-listing-section margin-top-45">
+
+                    <div class="add-listing-headline">
+                        <h3><i class="sl sl-icon-picture"></i> Gallery</h3>
+                    </div>               
+
+                    <select type="text" id="id_dropimages_gallery" name="dropimages_gallery" ></select>
+                    <div class="submit-section">  
+                        {% drop_images  %}                           
+                        <!--form action="/file-upload" class="dropzone" ></form-->
+                    </div>
+
+                </div>
+
+                <a href="#" onclick="document.getElementById('resource_form').submit();" class="button preview">Submit <i class="fa fa-arrow-circle-right"></i></a>
+                
+                <!-- Section / End -->
+
+            </div>
+
+            <!-- Copyrights 
+            <div class="col-md-12">
+                <div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
+            </div>
+            -->
+
+        </div>
+
+    </div>
+    <!-- Content / End -->
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+{% drop_images_js %}
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}

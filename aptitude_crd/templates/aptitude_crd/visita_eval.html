@@ -1,0 +1,175 @@
+{% extends 'aptitude/base.html' %}
+{% load i18n %}
+{% block extra_head %}
+<script src="/static/js/jquery-3.2.0.min.js"></script> 
+{{ form.media }}
+{% endblock %}
+
+{% block slider %}
+{% endblock %}
+
+
+{% block title %}
+Nueva evaluación
+{% endblock title%}
+{% block breadcrumbs %}
+<li>Evaluación</li>
+{% endblock breadcrumbs%}
+
+
+{% block content %}
+
+    {% if request.user.is_superuser %}
+    <!--
+    <div class="add-listing-section">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-user"></i>{% trans "Paciente" noop %}</h3>
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-4">
+                <h5>{% trans "Código" noop %}</h5>
+                <input class="search-field" id="id_contact_person" name="contact_person" value="{{object.paciente}}" type="text"/>
+            </div>                        
+        </div>
+
+    </div>
+
+    -->
+    {% endif %}
+
+     <!-- Section -->
+     <div class="add-listing-section margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-notebook"></i>{% trans "Detalle de la visita" noop %} </h3>
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-4">
+                <h4>{% trans "Paciente" noop %}</h4>
+                <h3>{{ object.paciente }}</h3>
+                <!--                            
+                <input class="search-field" id="id_shortname" name="shortname" type="text" value=""/>
+                -->
+            </div>   
+      
+                <div class="col-md-4">
+                    <h4>{% trans "Fecha de la visita" noop %}</h4>
+                    <h3>{{ object.fecha }}</h3>
+                    <!--                            
+                    <input class="search-field" id="id_shortname" name="shortname" type="text" value=""/>
+                    -->
+                </div>   
+                <div class="col-md-4">
+                    <h4>{% trans "Evaluador" noop %}:</h4> 
+                    <h3>{{object.user.first_name}} {{object.user.last_name}}</h3>
+                    <!--
+                    <select class="chosen-select-no-single" id="id_country" name="country">
+                        <option value="" label="blank">Evaluador</option>  
+                        <option value="H">enfermera especialista en geriatria</option>
+                        <option value="M">enfermera otros</option>
+                        <option value="M">médico general</option>
+                        <option value="M">equipo multidisciplinar</option>
+                        <option value="M">médico residente</option>
+                        <option value="M">otros</option>
+
+                    </select>
+                    -->
+                </div>
+            
+        </div>  
+            
+    </div>
+        
+    {% if not primera_visita %}
+    {% if sensorial %}
+
+    <div class="add-listing-section  margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-drop"></i>{% trans "Resultado ICOPE" noop %}</h3>
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-12">
+                <h3>Solo se han detectado problemas en el dominio sensorial</h3>
+            </div>                        
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="add-listing-section  margin-top-45">
+
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-drop"></i>{% trans "Resultado ICOPE" noop %}</h3>
+        </div>
+
+        <div class="row with-forms">
+            <div class="col-md-12">
+                <h3>Detectados problemas en multiples dominios</h3>
+            </div>                        
+        </div>
+
+    </div>
+    {% endif %}
+
+    {% endif %}
+
+    {% for dominio in dominios %}
+    <div class="add-listing-section margin-top-45">
+        <!-- Headline -->
+        <div class="add-listing-headline">
+            <h3><i class="sl sl-icon-note"></i>{{ dominio }} </h3>
+        </div>
+
+        <div class="row">
+                
+            <div class="col-md-12">
+
+                <div class="style-1">
+
+                    <ul class="collapse-links col-md-12">
+                    {% for cuestionario in object.evaluaciones.all %}
+                        {% if cuestionario.cuestionario.dominio == dominio %}
+                        <div class="row">
+                            <div class="col-md-10">
+                                    <li><a href="/evaluacion/{{cuestionario.id}}">{{cuestionario}}</a></li>
+                            </div>   
+                            {% if cuestionario.completada %}
+                            <div class="col-md-2"><i class="sl sl-icon-check" style="font-size:25px; color:green"></i></div>
+                            {% else %}
+                            <div class="col-md-2"><i class="sl sl-icon-plus" style="font-size:25px"></i></div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+
+
+    <div class="margin-top-45">
+
+        <a href="{% url 'visita-lista' object.paciente.pk %}" class="button border with-icon">Terminar evaluación  <i class="sl  sl-icon-arrow-right-circle "></i></a>
+        
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+
+<!--script type="text/javascript" src="/static/js/dropzone.js"></script-->
+{% endblock %}
+
+{% block maps %}
+{% endblock %}
