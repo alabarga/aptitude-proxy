@@ -4,6 +4,7 @@ from django.utils.translation import gettext as _
 from datetime import date
 from django.dispatch import receiver
 from django.urls import reverse
+import uuid
 
 from multiselectfield import MultiSelectField
 
@@ -383,6 +384,8 @@ class Opcion(models.Model):
 
 class Paciente(models.Model):
 
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     codigo = models.CharField(verbose_name = _("Codigo"), max_length=7, blank= True, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank= True, null = False)
 
@@ -390,14 +393,14 @@ class Paciente(models.Model):
     apellidos = models.CharField(verbose_name = _("Apellidos"), max_length=64)
     dni = models.CharField(verbose_name = _("DNI"), max_length=10, blank=True, null = True)
     
-    ciudad = models.CharField(verbose_name = _("Ciudad"), max_length=255, blank= False, null = False)
-    telefono = models.CharField(verbose_name = _("Teléfono"), max_length=9, blank=False, null = False)
+    ciudad = models.CharField(verbose_name = _("Ciudad"), max_length=255, blank= True, null = True)
+    telefono = models.CharField(verbose_name = _("Teléfono"), max_length=9, blank=True, null = True)
 
     fecha_nacimiento = models.DateField(verbose_name = _("Fecha de nacimiento"), blank= False, null = False)
     sexo = models.IntegerField(verbose_name = _("Sexo"), choices = _SEX, blank= False, null = False)
     
-    territorio = models.IntegerField(verbose_name = _("Territorio"), choices = _TERRITORIO, blank= True, null = False, default=0)
-    pais = models.CharField(verbose_name = _("País"), max_length=255, blank= True, null = False, default='España')
+    territorio = models.CharField(verbose_name = _("Zona"), blank= True, null = True, max_length=64)
+    pais = models.CharField(verbose_name = _("País"), max_length=255, blank= True, null = True, default='España')
 
     nivel_estudios = models.IntegerField(verbose_name = _("Nivel de estudios"), choices = _NIVEL_ESTUDIOS, blank= True, null = True)
     vivienda = models.IntegerField(verbose_name = _("Vivienda"), choices = _VIVIENDA, blank= True, null = True)
@@ -438,6 +441,8 @@ class Paciente(models.Model):
 
 
 class Visita(models.Model):
+
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank= True, null = True)
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='visitas')
@@ -550,6 +555,8 @@ def execute_after_visit_save(sender, instance, created, *args, **kwargs):
         instance.add_cuestionarios_dominio('SCREENING')
 
 class Evaluacion(models.Model):
+
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     visita = models.ForeignKey(Visita, on_delete=models.CASCADE, related_name='evaluaciones')
     cuestionario = models.ForeignKey(Cuestionario, on_delete=models.CASCADE)
     completada = models.BooleanField(default=False)
@@ -600,6 +607,7 @@ def execute_after_eval_save(sender, instance, created, *args, **kwargs):
 
 
 class Pregunta(models.Model):
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     evaluacion = models.ForeignKey(Evaluacion, on_delete=models.CASCADE, related_name='preguntas')
     componente = models.ForeignKey(Componente, on_delete=models.CASCADE, related_name='respuestas')
     valor = models.CharField(max_length=100)

@@ -79,18 +79,20 @@ Pacientes
                 -->
 
                 <!-- City -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <h5>Ciudad</h5>
                     {{form.ciudad}}
                 
                     
                 </div>
-
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <h5>Telefono</h5>
                     {{form.telefono}}
                 </div>
-
+                <div class="col-md-4">
+                    <h5>Zona</h5>
+                    {{form.territorio}}
+                </div>
                 <!-- Country 
                 <div class="col-md-2">
                     <h5>Territorio</h5>
@@ -157,7 +159,7 @@ Pacientes
     <!-- Section / End -->
 
     <!-- Section -->
-    <div class="add-listing-section margin-top-45 margin-bottom-45"">
+    <div class="add-listing-section margin-top-45 margin-bottom-45">
 
         <!-- Headline -->
         <div class="add-listing-headline">
@@ -230,7 +232,7 @@ Pacientes
     </div>
 
     <!-- Section -->
-    <div class="add-listing-section margin-top-45 margin-bottom-45"">
+    <div class="add-listing-section margin-top-45 margin-bottom-45">
 
         <!-- Headline -->
         <div class="add-listing-headline">
@@ -241,26 +243,23 @@ Pacientes
         <div class="row with-forms">
             <div class="col-md-6">
                 <h5>Consentimiento informado firmado</h5>
-                
             </div>
-            <div class="checkboxes in-row margin-bottom-20">
-					
+            <div class="checkboxes in-row margin-bottom-20">	
                 <input id="id_consentimiento_informado" type="checkbox" name="consentimiento_informado" required {% if object.consentimiento_informado %} checked {% endif %}>
                 <label for="id_consentimiento_informado">{% trans "Sí" noop %}</label>
-            <div>
+            </div>
         </div>
 
         <!-- Title -->
-        <div class="row with-forms col-md-12">
+        <div class="row with-forms">
             <div class="col-md-6">
                 <h5>Accede usted a compartir los resultados obtenidos</h5>
-                
             </div>
             <div class="checkboxes in-row margin-bottom-20">
 					
                 <input id="id_prevention_share" type="checkbox" name="prevention_share" required {% if object.id_prevention_share %} checked {% endif %}>
                 <label for="id_prevention_share">{% trans "Sí" noop %}</label>
-            <div>
+            </div>
         </div>
 
     </div>
